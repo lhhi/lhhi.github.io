@@ -26,10 +26,14 @@
 <meta property="og:site_name" content="hui&#39;s blog">
 <meta property="og:description" content="配置环境本文的代码环境为linux，这是因为我们的文本编辑器使用termios.h头文件，这方便我们在底层与终端进行交互。但该头文件在Windows环境下不可用。所以我们需要使用Bash on Windows。 关于Bash on WindowsBash on Windows 是 Microsoft 在 Windows 10 和 Windows 11 中引入的一个功能，现在更广泛地被称为 **Wi">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://lhhi.github.io/img/bg/%E6%96%B0%E6%B5%B7%E5%A4%A91.jpg">
 <meta property="article:published_time" content="2024-08-27T07:24:22.000Z">
-<meta property="article:modified_time" content="2024-08-28T06:57:04.738Z">
+<meta property="article:modified_time" content="2024-08-29T07:33:47.174Z">
 <meta property="article:author" content="hachui">
+<meta property="article:tag" content="Hexo">
+<meta property="article:tag" content="Fluid">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://lhhi.github.io/img/bg/%E6%96%B0%E6%B5%B7%E5%A4%A91.jpg">
   
   
   
@@ -197,7 +201,7 @@
   
 
 <div id="banner" class="banner" parallax=true
-     style="background: url('/img/bg/%E6%96%B0%E6%B5%B7%E5%A4%A9815.jpg') no-repeat center center; background-size: cover;">
+     style="background: url('/img/bg/%E6%96%B0%E6%B5%B7%E5%A4%A91.jpg') no-repeat center center; background-size: cover;">
   <div class="full-bg-img">
     <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
       <div class="banner-text text-center fade-in-up">
@@ -227,7 +231,7 @@
         <i class="iconfont icon-chart"></i>
         
           <!-- compatible with older versions-->
-          2.9k 字
+          4.3k 字
         
       </span>
     
@@ -239,7 +243,7 @@
         
         
           <!-- compatible with older versions-->
-          24 分钟
+          37 分钟
         
       </span>
     
@@ -329,6 +333,41 @@
 <li><code>c_lflag</code> 字段用于“本地标志”（local flags）。macOS 的 <code>&lt;termios.h&gt;</code> 中的注释将其描述为“其他状态的倾倒场”（dumping ground for other state），因此可以将其视为“杂项标志”。其他标志字段包括 <code>c_iflag</code>（输入标志）、<code>c_oflag</code>（输出标志）和 <code>c_cflag</code>（控制标志），我们都需要修改它们以启用原始模式。</li>
 <li><code>ECHO</code> 是一个位标志（bitflag），其二进制表示为 <code>00000000000000000000000000001000</code>。我们使用位非（bitwise-NOT）操作符（<code>~</code>）对这个值进行操作，得到 <code>11111111111111111111111111110111</code>。然后我们将这个结果与标志字段进行位与（bitwise-AND）操作，这会将标志字段中的第四位强制设置为 0，同时保持其他所有位的当前值。在 C 语言中，像这样翻转位是很常见的操作。</li>
 </ul>
+<h1 id="在退出时关闭原始模式"><a href="#在退出时关闭原始模式" class="headerlink" title="在退出时关闭原始模式"></a>在退出时关闭原始模式</h1><p>在程序退出时是终端回到初始状态是一个好习惯。因此我们将会保存终端的副本，方便在程序退出时恢复它。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment">#include &lt;stdlib.h&gt;</span><br><span class="hljs-comment">#include &lt;termios.h&gt;</span><br><span class="hljs-comment">#include &lt;unistd.h&gt;</span><br><br>struct termios ori_termios;<br><br>void <span class="hljs-function"><span class="hljs-title">disableRawMode</span></span>() &#123;<br>  tcsetattr(STDIN_FILENO, TCSAFLUSH, &amp;ori_termios);<br>&#125;<br><br>void <span class="hljs-function"><span class="hljs-title">enableRawMode</span></span>() &#123;<br>  tcgetattr(STDIN_FILENO, &amp;ori_termios);<br>  atexit(disableRawMode);<br>  struct termios raw=ori_termios;<br>  raw.c_lflag &amp;= ~(ECHO);<br>  tcsetattr(STDIN_FILENO, TCSAFLUSH, &amp;raw);<br>&#125;<br><br>int <span class="hljs-function"><span class="hljs-title">main</span></span>() &#123;<br>  enableRawMode();<br>  char c;<br>  <span class="hljs-keyword">while</span> (<span class="hljs-built_in">read</span>(STDIN_FILENO, &amp;c, 1) == 1 &amp;&amp; c != <span class="hljs-string">&#x27;q&#x27;</span>);<br>  <span class="hljs-built_in">return</span> 0;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><code>atexit()</code> 函数来自 <code>&lt;stdlib.h&gt;</code> 头文件。我们使用它来注册我们的 <code>disableRawMode()</code> 函数，以便在程序退出时自动调用该函数，无论是通过从 <code>main()</code> 函数返回还是调用 <code>exit()</code> 函数退出。这样，我们可以确保在程序退出时，终端属性会恢复到我们程序开始时的状态。</p>
+<p>我们将原始的终端属性存储在一个全局变量 <code>orig_termios</code> 中。在我们开始对终端属性进行修改之前，我们将 <code>orig_termios</code> 结构体赋值给 <code>raw</code> 结构体，以便制作一个原始属性的副本。</p>
+<p>你可能会注意到，在程序退出后，遗留在缓冲区中的输入不会被送入你的 shell。这是因为当程序退出时，向 <code>tcsetattr()</code> 传递了 <code>TCSAFLUSH</code> 选项。如前所述，<code>TCSAFLUSH</code> 会在应用对终端的更改之前丢弃任何未读取的输入。</p>
+<h1 id="关闭规范模式"><a href="#关闭规范模式" class="headerlink" title="关闭规范模式"></a>关闭规范模式</h1><p>这里有一个<code>ICANON</code>标志，它允许我们关闭规范模式。这样我们的终端不在是一行一行的读入，而是一个字一个字的读入。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs ba">#include &lt;stdlib.h&gt;<br>#include &lt;termios.h&gt;<br>#include &lt;unistd.h&gt;<br>struct termios orig_termios;<br>void disableRawMode() &#123; … &#125;<br>void enableRawMode() &#123;<br>  tcgetattr(STDIN_FILENO, &amp;orig_termios);<br>  atexit(disableRawMode);<br>  struct termios raw = orig_termios;<br>  raw.c_lflag &amp;= ~(ECHO | ICANON);<br>  tcsetattr(STDIN_FILENO, TCSAFLUSH, &amp;raw);<br>&#125;<br>int main() &#123; … &#125;<br></code></pre></td></tr></table></figure>
+
+<p><code>ICANON</code>标志来自<code>termios.h</code>头文件，它是一个”local”flag在c_lflag字段。现在只要我们按下q程序就会退出。</p>
+<h1 id="显示按键"><a href="#显示按键" class="headerlink" title="显示按键"></a>显示按键</h1><p>为了看到原始模式下我们的输入，我们让程序打印我们的输入。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment">#include &lt;ctype.h&gt;</span><br><span class="hljs-comment">#include &lt;stdio.h&gt;</span><br><span class="hljs-comment">#include &lt;stdlib.h&gt;</span><br><span class="hljs-comment">#include &lt;termios.h&gt;</span><br><span class="hljs-comment">#include &lt;unistd.h&gt;</span><br>struct termios orig_termios;<br>void <span class="hljs-function"><span class="hljs-title">disableRawMode</span></span>() &#123; … &#125;<br>void <span class="hljs-function"><span class="hljs-title">enableRawMode</span></span>() &#123; … &#125;<br>int <span class="hljs-function"><span class="hljs-title">main</span></span>() &#123;<br>  enableRawMode();<br>  char c;<br>  <span class="hljs-keyword">while</span> (<span class="hljs-built_in">read</span>(STDIN_FILENO, &amp;c, 1) == 1 &amp;&amp; c != <span class="hljs-string">&#x27;q&#x27;</span>) &#123;<br>    <span class="hljs-keyword">if</span> (iscntrl(c)) &#123;<br>      <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d\n&quot;</span>, c);<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>      <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d (&#x27;%c&#x27;)\n&quot;</span>, c, c);<br>    &#125;<br>  &#125;<br>  <span class="hljs-built_in">return</span> 0;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><code>iscntrl()</code> 函数来自 <code>&lt;ctype.h&gt;</code> 头文件，而 <code>printf()</code> 函数来自 <code>&lt;stdio.h&gt;</code> 头文件。</p>
+<p><code>iscntrl()</code> 函数用于测试一个字符是否是控制字符。控制字符是非打印字符，我们不想将它们打印到屏幕上。ASCII 码 0-31 都是控制字符，以及 127 也是控制字符。ASCII 码 32-126 都是可打印的。（可以查看 ASCII 表来查看所有字符。）</p>
+<p><code>printf()</code> 函数可以打印字节的多种表示形式。<code>%d</code> 告诉它将字节格式化为十进制数（即其 ASCII 码），而 <code>%c</code> 告诉它直接将字节作为字符写出。</p>
+<p>这是一个非常有用的程序。它向我们展示了各种按键如何转换为我们读取的字节。大多数普通按键直接转换为其代表的字符。但是，尝试看看当你按下箭头键、Escape 键、Page Up、Page Down、Home、End、Backspace、Delete 或 Enter 键时会发生什么。也尝试使用 Ctrl 键的组合，如 Ctrl-A、Ctrl-B 等。</p>
+<p>你会注意到几件有趣的事情：</p>
+<ul>
+<li>箭头键、Page Up、Page Down、Home 和 End 键都向终端输入 3 或 4 个字节：27、’[‘，以及一个或两个其他字符。这被称为转义序列。所有转义序列都以 27 字节开头。按下 Escape 键会发送一个单独的 27 字节作为输入。</li>
+<li>Backspace 是字节 127。Delete 是一个 4 字节的转义序列。</li>
+<li>Enter 是字节 10，它是一个换行符，也称为 ‘\n’。</li>
+<li>Ctrl-A 是 1，Ctrl-B 是 2，依此类推。但是 Ctrl-C 会终止程序，对吧。不过，那些有效的 Ctrl 键组合似乎将字母 A-Z 映射到 1-26 的代码上。</li>
+<li>顺便说一下，如果你不小心按下了 Ctrl-S，你可能会发现你的程序似乎被冻结了。你所做的是请求程序停止向你发送输出。按下 Ctrl-Q 可以告诉它恢复发送输出。</li>
+</ul>
+<p>另外，如果你按下 Ctrl-Z（或在某些系统上可能是 Ctrl-Y），你的程序将被挂起到后台。运行 <code>fg</code> 命令可以将其带回到前台。（在 macOS 上，这样做之后程序可能会立即退出，因为 <code>read()</code> 函数返回 -1 表示发生了错误。而在 Linux 上，似乎能够正确地恢复 <code>read()</code> 调用。）</p>
+<h1 id="关闭ctrl-c和ctrl-s信号"><a href="#关闭ctrl-c和ctrl-s信号" class="headerlink" title="关闭ctrl-c和ctrl-s信号"></a>关闭ctrl-c和ctrl-s信号</h1><p>默认情况下，Ctrl-C 向当前进程发送 SIGINT 信号，导致进程终止，而 Ctrl-Z 向当前进程发送 SIGTSTP 信号，导致进程挂起。现在，让我们关闭这两个信号的发送。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment">#include &lt;ctype.h&gt;</span><br><span class="hljs-comment">#include &lt;stdio.h&gt;</span><br><span class="hljs-comment">#include &lt;stdlib.h&gt;</span><br><span class="hljs-comment">#include &lt;termios.h&gt;</span><br><span class="hljs-comment">#include &lt;unistd.h&gt;</span><br>struct termios orig_termios;<br>void <span class="hljs-function"><span class="hljs-title">disableRawMode</span></span>() &#123; … &#125;<br>void <span class="hljs-function"><span class="hljs-title">enableRawMode</span></span>() &#123;<br>  tcgetattr(STDIN_FILENO, &amp;orig_termios);<br>  atexit(disableRawMode);<br>  struct termios raw = orig_termios;<br>  raw.c_lflag &amp;= ~(ECHO | ICANON | ISIG);<br>  tcsetattr(STDIN_FILENO, TCSAFLUSH, &amp;raw);<br>&#125;<br>int <span class="hljs-function"><span class="hljs-title">main</span></span>() &#123; … &#125;<br></code></pre></td></tr></table></figure>
+
+<p><code>ISIG</code>来自<code>termios.h</code>，现在，按下ctrl-c，你将会看到3，ctrl-z将会是26。</p>
+<h1 id="禁止ctrl-s和ctr-q"><a href="#禁止ctrl-s和ctr-q" class="headerlink" title="禁止ctrl-s和ctr-q"></a>禁止ctrl-s和ctr-q</h1><p>默认情况下，Ctrl-S 和 Ctrl-Q 用于软件流控制。Ctrl-S 会停止数据向终端的传输，直到你按下 Ctrl-Q。</p>
+<p>现在，让我们关闭这个功能。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment">#include &lt;ctype.h&gt;</span><br><span class="hljs-comment">#include &lt;stdio.h&gt;</span><br><span class="hljs-comment">#include &lt;stdlib.h&gt;</span><br><span class="hljs-comment">#include &lt;termios.h&gt;</span><br><span class="hljs-comment">#include &lt;unistd.h&gt;</span><br>struct termios orig_termios;<br>void <span class="hljs-function"><span class="hljs-title">disableRawMode</span></span>() &#123; … &#125;<br>void <span class="hljs-function"><span class="hljs-title">enableRawMode</span></span>() &#123;<br>  tcgetattr(STDIN_FILENO, &amp;orig_termios);<br>  atexit(disableRawMode);<br>  struct termios raw = orig_termios;<br>  raw.c_iflag &amp;= ~(IXON);<br>  raw.c_lflag &amp;= ~(ECHO | ICANON | ISIG);<br>  tcsetattr(STDIN_FILENO, TCSAFLUSH, &amp;raw);<br>&#125;<br>int <span class="hljs-function"><span class="hljs-title">main</span></span>() &#123; … &#125;<br></code></pre></td></tr></table></figure>
+
+<p>IXON 来自于 <code>&lt;termios.h&gt;</code>。这里的 I 代表“输入标志”，而 XON 则来源于 Ctrl-S 和 Ctrl-Q 产生的两个控制字符的名称：XOFF 用于暂停传输，XON 用于恢复传输。现在，Ctrl-S 可以被解读为 19 ，而 Ctrl-Q 可以被解读为 17 。</p>
 
                 
               </div>
@@ -337,6 +376,15 @@
             <div>
               <div class="post-metas my-3">
   
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Hexo/" class="print-no-link">#Hexo</a>
+      
+        <a href="/tags/Fluid/" class="print-no-link">#Fluid</a>
+      
+    </div>
   
 </div>
 
@@ -391,9 +439,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2024/08/27/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" title="数据结构">
+                      <a href="/2024/10/09/04-Day/" title="04_Day">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">数据结构</span>
+                        <span class="hidden-mobile">04_Day</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     

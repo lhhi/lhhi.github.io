@@ -1,0 +1,689 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=dark>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.ico">
+  <link rel="icon" href="/img/myfavicon.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="hachui">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="设置段描述符123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869void set_segmdesc(struct SEGMENT_DESCRIPTOR *sd, unsigned int lim">
+<meta property="og:type" content="article">
+<meta property="og:title" content="06_DAY">
+<meta property="og:url" content="https://lhhi.github.io/2024/10/10/06-DAY/index.html">
+<meta property="og:site_name" content="hui&#39;s blog">
+<meta property="og:description" content="设置段描述符123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869void set_segmdesc(struct SEGMENT_DESCRIPTOR *sd, unsigned int lim">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-10-10T11:20:14.000Z">
+<meta property="article:modified_time" content="2024-10-10T11:49:14.845Z">
+<meta property="article:author" content="hachui">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>06_DAY - hui&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/custom.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"lhhi.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null},"gtag":null,"woyaola":null,"cnzz":null},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Hui&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/bg/%E6%96%B0%E6%B5%B7%E5%A4%A9815.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="06_DAY"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-10-10 19:20" pubdate>
+          2024年10月10日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          <!-- compatible with older versions-->
+          4.6k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          <!-- compatible with older versions-->
+          39 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">06_DAY</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="设置段描述符"><a href="#设置段描述符" class="headerlink" title="设置段描述符"></a>设置段描述符</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></td><td class="code"><pre><code class="hljs bash">void set_segmdesc(struct SEGMENT_DESCRIPTOR *sd, unsigned int <span class="hljs-built_in">limit</span>, int base, int ar)<br>&#123;<br>	<span class="hljs-keyword">if</span> (<span class="hljs-built_in">limit</span> &gt; 0xfffff) &#123;<br>		ar |= 0x8000; /* G_bit = 1 */<br>		<span class="hljs-built_in">limit</span> /= 0x1000;<br>	&#125;<br>	sd-&gt;limit_low    = <span class="hljs-built_in">limit</span> &amp; 0xffff;<br>	sd-&gt;base_low     = base &amp; 0xffff;<br>	sd-&gt;base_mid     = (base &gt;&gt; 16) &amp; 0xff;<br>	sd-&gt;access_right = ar &amp; 0xff;<br>	sd-&gt;limit_high   = ((limit &gt;&gt; <span class="hljs-number">16</span>) &amp; <span class="hljs-number">0</span>x0f) | ((ar &gt;&gt; <span class="hljs-number">8</span>) &amp; <span class="hljs-number">0</span>xf0);<br>	sd-&gt;base_high    = (base &gt;&gt; <span class="hljs-number">24</span>) &amp; <span class="hljs-number">0</span>xff;<br>	return;<br>&#125; <br>这个set_segmdesc函数用于设置一个段描述符（Segment Descriptor），它是操作系统或系统软件中管理内存的关键数据结构，尤其在保护模式下。该函数将段限长（limit）、段基址（base）、访问权限（ar）等参数填充到SEGMENT_DESCRIPTOR结构体中。<br><br>函数功能解析<br>参数介绍：<br>struct SEGMENT_DESCRIPTOR *sd:<br>指向一个段描述符的指针，用来存储段描述符相关的信息。<br>unsigned int limit:<br>段的限长，表示该段的大小。它通常是段最后一个可访问的字节的偏移量。段限长有 <span class="hljs-number">20</span> 位，高 <span class="hljs-number">4</span> 位存储在limit_high，低 <span class="hljs-number">16</span> 位存储在limit_low。<br>int base:<br>段基址，表示段在内存中的起始地址。段基址有 <span class="hljs-number">32</span> 位，分为三个部分存储在描述符中（base_low、base_mid、base_high）。<br>int ar:<br>访问权限（Access Right），包含该段的类型、特权级别等属性。通常使用该值设置段的访问权限位。<br>函数逻辑：<br>检查 limit 是否大于 <span class="hljs-number">0</span>xFFFFF：<br><br>if (limit &gt; <span class="hljs-number">0</span>xfffff) &#123;<br>如果段限长大于 <span class="hljs-number">1</span> MB（<span class="hljs-number">0</span>xFFFFF），则表示需要使用 <span class="hljs-number">4</span>KB 粒度进行管理。此时设置G_bit为 <span class="hljs-number">1</span>（ar |= <span class="hljs-number">0</span>x8000;），并将limit除以<span class="hljs-number">0</span>x1000（即将段限长换算成以 <span class="hljs-number">4</span>KB 为单位的长度）。<br>G_bit（Granularity bit）用于指示段限长是以字节为单位（G=<span class="hljs-number">0</span>）还是以 <span class="hljs-number">4</span>KB 为单位（G=<span class="hljs-number">1</span>）。<br>设置段描述符的 limit 和 base：<br><br>sd-&gt;limit_low = limit &amp; <span class="hljs-number">0</span>xffff;<br><br>将段限长的低 <span class="hljs-number">16</span> 位存入limit_low。<br>sd-&gt;base_low = base &amp; <span class="hljs-number">0</span>xffff;<br><br>将段基址的低 <span class="hljs-number">16</span> 位存入base_low。<br>sd-&gt;base_mid = (base &gt;&gt; <span class="hljs-number">16</span>) &amp; <span class="hljs-number">0</span>xff;<br><br>将段基址的中 <span class="hljs-number">8</span> 位存入base_mid。<br>sd-&gt;access_right = ar &amp; <span class="hljs-number">0</span>xff;<br><br>访问权限的低 <span class="hljs-number">8</span> 位（ar &amp; <span class="hljs-number">0</span>xff）存入access_right。<br>设置 limit 高位和 base 高位：<br><br>sd-&gt;limit_high = ((limit &gt;&gt; <span class="hljs-number">16</span>) &amp; <span class="hljs-number">0</span>x0f) | ((ar &gt;&gt; <span class="hljs-number">8</span>) &amp; <span class="hljs-number">0</span>xf0);<br><br>段限长的高 <span class="hljs-number">4</span> 位（(limit &gt;&gt; <span class="hljs-number">16</span>) &amp; <span class="hljs-number">0</span>x0f）存入limit_high的低 <span class="hljs-number">4</span> 位。<br>ar的高 <span class="hljs-number">4</span> 位（(ar &gt;&gt; <span class="hljs-number">8</span>) &amp; <span class="hljs-number">0</span>xf0，包括一些控制标志如G_bit等）存入limit_high的高 <span class="hljs-number">4</span> 位。<br>sd-&gt;base_high = (base &gt;&gt; <span class="hljs-number">24</span>) &amp; <span class="hljs-number">0</span>xff;<br><br>将段基址的高 <span class="hljs-number">8</span> 位存入base_high。<br>结构体中的字段如何映射：<br>段描述符一般是 <span class="hljs-number">8</span> 个字节的结构，在此函数中被分解为以下部分：<br>段限长（limit）：<br>低 <span class="hljs-number">16</span> 位：limit_low。<br>高 <span class="hljs-number">4</span> 位：limit_high的低 <span class="hljs-number">4</span> 位。<br>段基址（base）：<br>低 <span class="hljs-number">16</span> 位：base_low。<br>中 <span class="hljs-number">8</span> 位：base_mid。<br>高 <span class="hljs-number">8</span> 位：base_high。<br>访问权限（ar）：<br>低 <span class="hljs-number">8</span> 位：access_right。<br>高 <span class="hljs-number">4</span> 位：limit_high的高 <span class="hljs-number">4</span> 位。<br>总结<br>这个函数将段限长（limit）和段基址（base）等信息打包成一个段描述符，并处理了可能的 <span class="hljs-number">4</span>KB 粒度情况。关键步骤包括处理段限长大于<span class="hljs-number">1</span>MB时的G_bit设定，以及分割段限长和段基址分别存储在描述符的不同字段中。<br></code></pre></td></tr></table></figure>
+
+<h1 id="设置中断描述符"><a href="#设置中断描述符" class="headerlink" title="设置中断描述符"></a>设置中断描述符</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><code class="hljs bash">struct GATE_DESCRIPTOR &#123;<br>	short offset_low, selector;<br>	char dw_count, access_right;<br>	short offset_high;<br>&#125;;<br>`GATE_DESCRIPTOR` 结构体用于描述 **中断门**、**陷阱门**或 **调用门** 等，主要用于在 x86 架构的保护模式下定义中断和异常处理。它的各个字段承载了与这些门相关的重要信息。以下是该结构体的详细解析：<br><br><span class="hljs-comment">### GATE_DESCRIPTOR 结构体</span><br>```c<br>struct GATE_DESCRIPTOR &#123;<br>    short offset_low;     // 偏移地址的低16位<br>    short selector;       // 段选择子<br>    char dw_count;        // 如果是调用门，表示堆栈要复制的参数个数，其他类型忽略<br>    char access_right;    // 门的属性和访问权限<br>    short offset_high;    // 偏移地址的高16位<br>&#125;;<br>```<br><br><span class="hljs-comment">### 字段解析</span><br><br>1. **offset_low**：<br>   - 类型：`short`<br>   - 说明：中断处理程序地址的低16位。处理器在中断或异常发生时会根据这个偏移地址开始执行处理程序。<br><br>2. **selector**：<br>   - 类型：`short`<br>   - 说明：段选择子，通常指向内核代码段的段描述符。它用于确定中断处理程序所在的代码段，结合偏移量一起组成完整的地址。<br><br>3. **dw_count**：<br>   - 类型：`char`<br>   - 说明：对于 **调用门**（Call Gate），该字段表示堆栈要复制的参数个数。在 **中断门** 和 **陷阱门** 中，这个字段通常被忽略，设为0。<br><br>4. **access_right**：<br>   - 类型：`char`<br>   - 说明：描述符的访问权限和属性。它的具体内容可能包括以下几位：<br>     - **P** (Present)：表示门描述符是否有效（是否存在）。<br>     - **DPL** (Descriptor Privilege Level)：描述符的特权级别，范围通常从0（最高）到3（最低）。<br>     - **Type**：描述符的类型（如中断门、陷阱门或调用门）。通常，中断门的类型为0xE（1110），陷阱门的类型为0xF（1111）。<br><br>5. **offset_high**：<br>   - 类型：`short`<br>   - 说明：中断处理程序地址的高16位。结合 `offset_low`，这两个字段共同组成完整的32位处理程序地址。<br><br><span class="hljs-comment">### 总结</span><br>`GATE_DESCRIPTOR` 结构体是中断描述符表（IDT）中中断门、陷阱门和调用门的关键数据结构。它通过提供完整的中断处理程序地址、段选择子和访问权限等信息，确保 CPU 能够在发生中断或异常时正确地跳转到相应的处理程序并执行相应的安全检查。<br></code></pre></td></tr></table></figure>
+
+
+
+<h1 id="初始化PIC"><a href="#初始化PIC" class="headerlink" title="初始化PIC"></a>初始化PIC</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><code class="hljs bash">pic:在操作系统中，**PIC** 是 **Programmable Interrupt Controller（可编程中断控制器）** 的缩写。它是一种硬件设备，用于管理多个硬件设备发出的中断请求，并将这些请求发送给 CPU，以便 CPU 能够有序地处理这些中断信号。<br><br><span class="hljs-comment">### PIC 的主要功能：</span><br>1. **中断管理**：<br>   PIC 接收来自不同硬件设备的中断请求（IRQ，Interrupt Request），例如键盘、鼠标、硬盘等设备发出的请求，并决定以什么顺序向 CPU 发送这些请求。<br><br>2. **优先级处理**：<br>   PIC 会为不同的中断请求设置优先级。例如，定时器的中断可能比键盘输入中断更高优先级。PIC 确保优先级较高的中断会优先处理，而低优先级的中断可能需要等待或被中断。<br><br>3. **中断屏蔽**：<br>   PIC 还可以屏蔽某些中断，防止某些中断请求被传递给 CPU。如果某个设备暂时不需要 CPU 的处理，可以通过设置屏蔽位来忽略它的中断请求。<br><br>4. **中断级联**：<br>   PIC 可以与其他 PIC 级联，以扩展可以管理的中断数量。在传统的 x86 架构中，使用了两个 8259A PIC 控制器来管理 16 个中断。<br><br><span class="hljs-comment">### 经典的 PIC —— 8259A</span><br>在早期的 x86 架构中，**8259A** 是一种常见的 PIC 控制器。标准的 PC 机中使用两个 8259A 控制器级联工作：<br>- **主 PIC（PIC0）**：负责管理 IRQ0 到 IRQ7 的中断请求。<br>- **从 PIC（PIC1）**：负责管理 IRQ8 到 IRQ15 的中断请求，并通过主 PIC 的 IRQ2 通道连接到 CPU。<br><br><span class="hljs-comment">### 8259A 工作原理</span><br>1. **IRQ 线路**：<br>   每个设备都连接到一个指定的 IRQ 线路，当设备需要 CPU 处理时，它会发送一个中断请求信号到对应的 IRQ 线路上。例如，键盘使用 IRQ1，系统定时器使用 IRQ0。<br><br>2. **中断向量表**：<br>   当一个中断请求到达 PIC，PIC 会生成一个中断向量，并通过中断向量表查找对应的中断服务例程（ISR，Interrupt Service Routine），然后将控制权交给操作系统的相应 ISR 来处理该中断。<br><br>3. **初始化与配置**：<br>   8259A PIC 需要进行初始化，以便设置中断向量基址、级联关系和中断屏蔽等。这个过程一般是在操作系统启动时完成的。例如，主 PIC 的 IRQ0-7 映射到 CPU 的中断向量 `INT 20H` 到 `INT 27H`，从 PIC 的 IRQ8-15 映射到 `INT 28H` 到 `INT 2FH`。<br><br><span class="hljs-comment">### 常见的 8259A PIC 寄存器</span><br>1. **IMR（Interrupt Mask Register）**：<br>   中断屏蔽寄存器，用于屏蔽不需要的中断。例如，如果想要屏蔽键盘中断，可以设置相应的位。<br><br>2. **ICW（Initialization Command Word）**：<br>   初始化命令字，用于配置 PIC 的工作模式。例如，ICW 设置是否使用级联模式、是否使用边缘触发等。<br><br>3. **ISR（In-Service Register）**：<br>   中断服务寄存器，表示哪些中断正在被处理。<br><br><span class="hljs-comment">### APIC 和 IO-APIC</span><br>随着现代操作系统和硬件的复杂化，传统的 8259A PIC 已经逐渐被 **APIC**（Advanced Programmable Interrupt Controller，高级可编程中断控制器）和 **IO-APIC**（Input/Output APIC）取代。<br><br>- **APIC**：可以支持更多的中断，提供更灵活的中断处理方式，通常用于多核系统中的中断管理。每个 CPU 核心都有一个本地 APIC，用于处理自身的中断。<br>- **IO-APIC**：用于接收外部设备的中断请求，类似于传统的 PIC，但支持更多的中断线（超过 16 条），并能更有效地处理中断。<br><br><span class="hljs-comment">### 总结</span><br>**PIC** 是管理硬件中断请求的关键设备，尤其是在传统的 x86 架构中，**8259A PIC** 用于协调多个外部设备的中断请求，并将其顺序地传递给 CPU。随着技术发展，现代系统更多使用 **APIC** 和 **IO-APIC** 这样的高级中断控制器来支持多核处理器和更多设备。<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs bash">void init_pic(void)<br>/* PIC初始化 */<br>&#123;<br>	io_out8(PIC0_IMR,  0xff  ); /* 禁止所有中断 */<br>	io_out8(PIC1_IMR,  0xff  ); /* 禁止所有中断 */<br><br>	io_out8(PIC0_ICW1, 0x11  ); /* 边缘触发模式（edge trigger mode） */<br>	io_out8(PIC0_ICW2, 0x20  ); /* IRQ0-7由INT20-27接收 */<br>	io_out8(PIC0_ICW3, 1 &lt;&lt; <span class="hljs-string">2); /* PIC1由IRQ2相连 */</span><br><span class="hljs-string">	io_out8(PIC0_ICW4, 0x01  ); /* 无缓冲区模式 */</span><br><span class="hljs-string"></span><br><span class="hljs-string">	io_out8(PIC1_ICW1, 0x11  ); /* 边缘触发模式（edge trigger mode） */</span><br><span class="hljs-string">	io_out8(PIC1_ICW2, 0x28  ); /* IRQ8-15由INT28-2f接收 */</span><br><span class="hljs-string">	io_out8(PIC1_ICW3, 2</span>     ); /* PIC1由IRQ2连接 */<br>	io_out8(PIC1_ICW4, 0x01  ); /* 无缓冲区模式 */<br><br>	io_out8(PIC0_IMR,  0xfb  ); /* 11111011 PIC1以外全部禁止 */<br>	io_out8(PIC1_IMR,  0xff  ); /* 11111111 禁止所有中断 */<br><br>	<span class="hljs-built_in">return</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h1 id="制作中断处理程序"><a href="#制作中断处理程序" class="headerlink" title="制作中断处理程序"></a>制作中断处理程序</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs bash">IRQ:**IRQ** (Interrupt Request，**中断请求**) 是计算机系统中用于通知处理器有外部设备需要处理的信号。外部设备（如键盘、鼠标、硬盘等）通过发出 IRQ 信号来请求 CPU 的处理，这样 CPU 可以暂时中断当前的工作，转去处理设备的请求。<br><br><span class="hljs-comment">### 详细解释：</span><br>1. **中断机制**：<br>   在一个多任务系统中，CPU 会不断地执行当前任务。但外设可能随时需要 CPU 的帮助，例如键盘按键、网络数据到达等。如果没有中断机制，CPU 就需要不断轮询（polling）设备来判断是否需要处理它们的请求，这样会非常浪费 CPU 资源。中断机制通过外设主动向 CPU 发出信号来解决这个问题，当一个设备发出中断信号时，CPU 会暂停当前的工作，处理中断请求（IRQ），处理完后再恢复原来的任务。<br><br>2. **IRQ 的工作流程**：<br>   - 当外设发出中断请求时，会通过中断控制器（如 8259 PIC）将中断信号传递给 CPU。<br>   - CPU 识别到中断信号后，会暂停当前的任务，并执行对应的中断服务程序（ISR，Interrupt Service Routine）。<br>   - ISR 处理完中断后，CPU 恢复原先的任务，继续执行。<br><br>3. **IRQ 号**：<br>   每个外设对应一个特定的中断号（IRQ 号），这些中断号用于区分不同设备的中断请求。常见的 IRQ 号包括：<br>   - **IRQ0**：系统时钟（定时器）中断。<br>   - **IRQ1**：键盘中断。<br>   - **IRQ2**：主 PIC 用于连接从 PIC 的中断。<br>   - **IRQ3** 和 **IRQ4**：用于串行通信端口。<br>   - **IRQ7**：并行端口中断。<br><br>   不同设备通常会有不同的 IRQ 号，如果两个设备使用相同的 IRQ 号，就会导致 **IRQ 冲突**，这会影响系统的正常运行。<br><br>4. **硬件和软件 IRQ**：<br>   - **硬件中断**：由外设硬件发起的中断请求（如键盘输入、硬盘读写等）。<br>   - **软件中断**：由软件发起的中断请求，通常通过特殊的指令触发，比如 `INT` 指令。<br><br><span class="hljs-comment">### 总结：</span><br>IRQ 是计算机中断机制的核心概念，通过中断请求，外部设备可以主动向 CPU 请求服务，而不需要 CPU 不断地查询设备的状态，从而提高了系统的效率。<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><code class="hljs bash">这段代码定义了一个名为 `inthandler21` 的中断处理函数，专门用于处理来自 **PS/2 键盘**的中断（IRQ 1）。它实现了一个简单的处理逻辑，即在屏幕上显示一条提示消息，然后进入一个无限循环，防止系统继续运行。这种代码通常用于调试或处理特定的错误情况。<br><br><span class="hljs-comment">### 代码解析：</span><br><br>```c<br>void inthandler21(int *esp)<br>/* 来自PS/2键盘的中断 */<br>&#123;<br>    struct BOOTINFO *binfo = (struct BOOTINFO *) ADR_BOOTINFO;<br>    boxfill8(binfo-&gt;vram, binfo-&gt;scrnx, COL8_000000, 0, 0, 32 * 8 - 1, 15);<br>    putfonts8_asc(binfo-&gt;vram, binfo-&gt;scrnx, 0, 0, COL8_FFFFFF, <span class="hljs-string">&quot;INT 21 (IRQ-1) : PS/2 keyboard&quot;</span>);<br>    <span class="hljs-keyword">for</span> (;;) &#123;<br>        io_hlt();<br>    &#125;<br>&#125;<br>```<br><br><span class="hljs-comment">### 主要步骤解析：</span><br><br>1. **函数原型**：<br>   ```c<br>   void inthandler21(int *esp)<br>   ```<br>   这是一个键盘中断处理函数。参数 `esp` 是一个指向堆栈指针的指针，通常用作中断处理程序的标准接口，在实际处理中可能不直接使用。<br><br>2. **获取引导信息**：<br>   ```c<br>   struct BOOTINFO *binfo = (struct BOOTINFO *) ADR_BOOTINFO;<br>   ```<br>   这里通过强制类型转换将 `ADR_BOOTINFO` 解析为一个指向 `BOOTINFO` 结构的指针。`BOOTINFO` 结构通常存储有关屏幕信息（如显存地址、屏幕宽度和高度等），这些信息可以用来操作显示输出。<br><br>3. **填充屏幕区域**：<br>   ```c<br>   boxfill8(binfo-&gt;vram, binfo-&gt;scrnx, COL8_000000, 0, 0, 32 * 8 - 1, 15);<br>   ```<br>   使用 `boxfill8` 函数在屏幕上填充一块区域。这个函数通常用来绘制矩形框或清除屏幕。参数含义如下：<br>   - `binfo-&gt;vram`：显存的起始地址，表示将绘制内容写入的显存区域。<br>   - `binfo-&gt;scrnx`：屏幕的宽度，表示一行有多少像素。<br>   - `COL8_000000`：颜色代码，`000000` 表示黑色。<br>   - `0, 0`：矩形的起始坐标 (0, 0)。<br>   - `32 * 8 - 1, 15`：矩形的宽度和高度，宽度是 32 个字符，每个字符占 8 个像素。<br><br>4. **在屏幕上输出文本**：<br>   ```c<br>   putfonts8_asc(binfo-&gt;vram, binfo-&gt;scrnx, 0, 0, COL8_FFFFFF, <span class="hljs-string">&quot;INT 21 (IRQ-1) : PS/2 keyboard&quot;</span>);<br>   ```<br>   这行代码通过 `putfonts8_asc` 函数在屏幕的 (0, 0) 位置以白色（`COL8_FFFFFF`）显示字符串 `<span class="hljs-string">&quot;INT 21 (IRQ-1) : PS/2 keyboard&quot;</span>`。这告诉用户 PS/2 键盘的中断（IRQ1）已经触发，并且该中断号为 21。<br><br>5. **无限循环**：<br>   ```c<br>   <span class="hljs-keyword">for</span> (;;) &#123;<br>       io_hlt();<br>   &#125;<br>   ```<br>   这是一个无限循环，`io_hlt()` 函数会让 CPU 进入空闲状态，直到下一次中断发生。由于这里的循环没有退出条件，CPU 会一直停在这里，导致系统在处理中断后不再继续执行其他任务。<br><br><span class="hljs-comment">### 代码用途：</span><br>这段代码可能用于在调试操作系统的早期阶段时，捕捉来自 PS/2 键盘的中断。通过将中断捕捉后在屏幕上打印一条信息，开发者可以确认中断是否正常工作。由于它在中断处理完后进入了无限循环，意味着系统中断发生后会停在这里，等待进一步的调试或重启。<br><br><span class="hljs-comment">### 改进建议：</span><br>1. **正常处理键盘输入**：在实际的键盘中断处理中，可以读取键盘缓冲区中的按键信息，并将其传递给操作系统，更新按键状态或触发相关事件。<br>2. **退出无限循环**：在生产环境中，应该避免无限循环，正常处理中断后应返回系统继续工作。<br><br><span class="hljs-comment">### 总结：</span><br>这段代码是一个简单的键盘中断处理程序，用于捕获 PS/2 键盘的中断，并显示调试信息。处理完中断后，程序进入了无限循环，这是典型的调试方式，用来确定中断是否被正确触发。<br></code></pre></td></tr></table></figure>
+
+<h1 id="将函数注册到IDT"><a href="#将函数注册到IDT" class="headerlink" title="将函数注册到IDT"></a>将函数注册到IDT</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><code class="hljs bash">	set_gatedesc(idt + 0x21, (int) asm_inthandler21, 2 * 8, AR_INTGATE32);<br>	set_gatedesc(idt + 0x27, (int) asm_inthandler27, 2 * 8, AR_INTGATE32);<br>	set_gatedesc(idt + 0x2c, (int) asm_inthandler2c, 2 * 8, AR_INTGATE32);<br>	`set_gatedesc` 函数用于设置 **中断门描述符**（GATE_DESCRIPTOR），它主要配置中断描述符表（IDT）中每个中断门的相关属性。通过该函数，可以指定中断处理程序的偏移地址、段选择子、访问权限等信息。<br><br><span class="hljs-comment">### 函数解析</span><br><br>```c<br>void set_gatedesc(struct GATE_DESCRIPTOR *gd, int offset, int selector, int ar)<br>&#123;<br>    gd-&gt;offset_low   = offset &amp; 0xffff;                  // 偏移地址的低16位<br>    gd-&gt;selector     = selector;                          // 段选择子<br>    gd-&gt;dw_count     = (ar &gt;&gt; 8) &amp; 0xff;                 // 如果是调用门，设置参数个数；其他门可忽略<br>    gd-&gt;access_right = ar &amp; 0xff;                        // 门的访问权限<br>    gd-&gt;offset_high  = (offset &gt;&gt; 16) &amp; 0xffff;         // 偏移地址的高16位<br>    <span class="hljs-built_in">return</span>;<br>&#125;<br>```<br><br><span class="hljs-comment">### 各参数及字段的意义</span><br><br>1. **参数**：<br>   - `struct GATE_DESCRIPTOR *gd`：指向中断门描述符的指针。<br>   - `int offset`：中断处理程序的偏移地址，表示要跳转到的具体位置。<br>   - `int selector`：段选择子，通常指向处理程序代码所在的段（在GDT中）。<br>   - `int ar`：访问权限，包含描述符的类型和特权级等信息。<br><br>2. **字段设置**：<br>   - `gd-&gt;offset_low`：<br>     - 设置中断处理程序地址的低16位。通过 `offset &amp; 0xffff` 将偏移地址的低16位提取出来。<br>   - `gd-&gt;selector`：<br>     - 设置段选择子，用于指定中断处理程序的代码段。这个选择子通常指向GDT中有效的代码段。<br>   - `gd-&gt;dw_count`：<br>     - 这个字段在调用门中表示参数的个数，其他类型的门可以忽略。通过 `ar &gt;&gt; 8` 提取权限位中的相关信息。<br>   - `gd-&gt;access_right`：<br>     - 设置访问权限，包含门的类型和特权级信息。通过 `ar &amp; 0xff` 提取访问权限的低8位。<br>   - `gd-&gt;offset_high`：<br>     - 设置中断处理程序地址的高16位。通过 `(offset &gt;&gt; 16) &amp; 0xffff` 提取偏移地址的高16位。<br><br><span class="hljs-comment">### 使用场景</span><br>在系统启动时，通常会调用 `set_gatedesc` 函数来初始化IDT中的每个中断门。这个过程包括设置每个中断的处理程序地址、对应的段选择子和权限信息。这样，当中断发生时，CPU能够通过IDT找到正确的处理程序，并且根据设定的权限进行适当的安全检查。<br><br><span class="hljs-comment">### 示例</span><br>假设你需要为中断向量 `0x20` 设置一个中断门描述符，指向 `interrupt_handler` 函数，可能的调用方式如下：<br><br>```c<br>set_gatedesc(&amp;idt[0x20], (int)interrupt_handler, selector, access_right);<br>```<br><br>这里，`interrupt_handler` 是中断处理程序的地址，`selector` 是指向代码段的段选择子，`access_right` 是指该中断的权限和类型标志。<br><br><span class="hljs-comment">### 总结</span><br>`set_gatedesc` 函数是设置中断门描述符的关键函数，通过配置偏移地址、段选择子和访问权限，确保系统能够正确处理各种中断和异常情况。<br></code></pre></td></tr></table></figure>
+
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>06_DAY</div>
+      <div>https://lhhi.github.io/2024/10/10/06-DAY/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>hachui</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年10月10日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2024/10/11/07-DAy/" title="07_DAy">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">07_DAy</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/10/10/05-DAY/" title="05_DAY">
+                        <span class="hidden-mobile">05_DAY</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://cdn.jsdelivr.net/npm/tocbot@4.12.2/dist/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

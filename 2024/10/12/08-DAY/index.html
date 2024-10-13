@@ -1,0 +1,704 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=dark>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.ico">
+  <link rel="icon" href="/img/myfavicon.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="hachui">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="鼠标控制 接受鼠标数据 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950int mouse_decode(struct MOUSE_DEC *mdec, unsigned char dat)&#123;	if (mdec-&gt;phase &#x3D;&#x3D; 0) &#123;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="08_DAY">
+<meta property="og:url" content="https://lhhi.github.io/2024/10/12/08-DAY/index.html">
+<meta property="og:site_name" content="hui&#39;s blog">
+<meta property="og:description" content="鼠标控制 接受鼠标数据 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950int mouse_decode(struct MOUSE_DEC *mdec, unsigned char dat)&#123;	if (mdec-&gt;phase &#x3D;&#x3D; 0) &#123;">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="c:\Users\HP\AppData\Roaming\Typora\typora-user-images\image-20241012211859799.png">
+<meta property="article:published_time" content="2024-10-12T12:47:30.000Z">
+<meta property="article:modified_time" content="2024-10-12T13:21:20.882Z">
+<meta property="article:author" content="hachui">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="c:\Users\HP\AppData\Roaming\Typora\typora-user-images\image-20241012211859799.png">
+  
+  
+  
+  <title>08_DAY - hui&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/custom.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"lhhi.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null},"gtag":null,"woyaola":null,"cnzz":null},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Hui&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/bg/%E6%96%B0%E6%B5%B7%E5%A4%A9815.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="08_DAY"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-10-12 20:47" pubdate>
+          2024年10月12日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          <!-- compatible with older versions-->
+          2.9k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          <!-- compatible with older versions-->
+          24 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">08_DAY</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="鼠标控制"><a href="#鼠标控制" class="headerlink" title="鼠标控制"></a>鼠标控制</h1><ol>
+<li><p>接受鼠标数据</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><code class="hljs bash">int mouse_decode(struct MOUSE_DEC *mdec, unsigned char dat)&#123;<br>	<span class="hljs-keyword">if</span> (mdec-&gt;phase == 0) &#123;<br>		/* 等待鼠标的0xfa的阶段 */<br>		<span class="hljs-keyword">if</span> (dat == 0xfa) &#123;<br>			mdec-&gt;phase = 1;<br>		&#125;        <br>		<span class="hljs-built_in">return</span> 0;<br>	&#125;<br>	<span class="hljs-keyword">if</span> (mdec-&gt;phase == 1) &#123;<br>		/* 等待鼠标第一字节的阶段 */<br>		mdec-&gt;buf[0] = dat;<br>		mdec-&gt;phase = 2;<br>		<span class="hljs-built_in">return</span> 0;<br>	&#125;//在阶段 1，函数等待鼠标输入的第一个字节，这个字节包含以下信息：<br>		1. 按钮状态（低 3 位）。<br>		2. X 和 Y 轴移动的标志位（第 4 和第 5 位）。<br>		3. 接收到该字节后，将其存储在缓冲区 mdec-&gt;buf[0] 中，并进入阶段 2。<br>	<span class="hljs-keyword">if</span> (mdec-&gt;phase == 2) &#123;<br>		/* 等待鼠标第二字节的阶段 */<br>		mdec-&gt;buf[1] = dat;<br>		mdec-&gt;phase = 3;<br>		<span class="hljs-built_in">return</span> 0;<br>	&#125;//第二字节代表鼠标在X轴上的偏移量<br>	<span class="hljs-keyword">if</span> (mdec-&gt;phase == 3) &#123;<br>		/* 等待鼠标第二字节的阶段 */<br>		mdec-&gt;buf[2] = dat;//y轴偏移量<br>		mdec-&gt;phase = 1;//充值<br>		mdec-&gt;btn = mdec-&gt;buf[0] &amp; 0x07;//低三位,按钮状态<br>		mdec-&gt;x = mdec-&gt;buf[1];<br>		mdec-&gt;y = mdec-&gt;buf[2];<br>		<span class="hljs-keyword">if</span> ((mdec-&gt;buf[<span class="hljs-number">0</span>] &amp; <span class="hljs-number">0</span>x10) != <span class="hljs-number">0</span>) &#123;<br>			mdec-&gt;x |= <span class="hljs-number">0</span>xffffff00;<br>		&#125;<br>		if ((mdec-&gt;buf[<span class="hljs-number">0</span>] &amp; <span class="hljs-number">0</span>x20) != <span class="hljs-number">0</span>) &#123;<br>			mdec-&gt;y |= <span class="hljs-number">0</span>xffffff00;<br>		&#125;     <br>		/* 鼠标的y方向与画面符号相反 */   <br>		mdec-&gt;y = - mdec-&gt;y; <br>		return <span class="hljs-number">1</span>;<br>	&#125;//在接收到所有三个字节后，函数会进行如下操作：<br><span class="hljs-number">1</span>. 从第一个字节提取按钮状态（mdec-&gt;btn = mdec-&gt;buf[<span class="hljs-number">0</span>] &amp; <span class="hljs-number">0</span>x07）。<br><span class="hljs-number">2</span>. 存储 X 轴和 Y 轴的移动量（mdec-&gt;x = mdec-&gt;buf[<span class="hljs-number">1</span>]，mdec-&gt;y = mdec-&gt;buf[<span class="hljs-number">2</span>]）。<br><span class="hljs-number">3</span>. 如果第 <span class="hljs-number">4</span> 位（X 轴符号位）被设置，表示 X 值为负数，需要符号扩展（mdec-&gt;x |=       <span class="hljs-number">0</span>xffffff00）。<br><span class="hljs-number">4</span>. 如果第 <span class="hljs-number">5</span> 位（Y 轴符号位）被设置，表示 Y 值为负数（mdec-&gt;y |= <span class="hljs-number">0</span>xffffff00）。<br>由于鼠标的 Y 轴方向和屏幕的 Y 轴方向相反，因此需要将 Y 轴的移动量取反（mdec-&gt;y = -mdec- &gt;y）。<br>	/* 应该不可能到这里来 */<br>	return -<span class="hljs-number">1</span>; <br>&#125;<br>//接受鼠标发来的三字节信息<br>//鼠标传递的 X 和 Y 移动数据通常是 <span class="hljs-number">8</span> 位的有符号数（范围是 -<span class="hljs-number">128</span> 到 <span class="hljs-number">127</span>）。为了将这些数据处理成 <span class="hljs-number">32</span> 位整数（系统处理可能更方便），需要符号扩展。如果数值是负数，则必须将高位填充为 <span class="hljs-number">1</span>，以保持符号正确。<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>移动鼠标指针</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><code class="hljs bash">					 /* 3字节都凑齐了，所以把它们显示出来*/<br>sprintf(s, <span class="hljs-string">&quot;[lcr %4d %4d]&quot;</span>, mdec.x, mdec.y);<br>		<span class="hljs-keyword">if</span> ((mdec.btn &amp; <span class="hljs-number">0</span>x01) != <span class="hljs-number">0</span>) &#123;<br>			s[<span class="hljs-number">1</span>] = &#x27;L&#x27;;<br>		&#125;<br>		if ((mdec.btn &amp; <span class="hljs-number">0</span>x02) != <span class="hljs-number">0</span>) &#123;<br>			s[<span class="hljs-number">3</span>] = &#x27;R&#x27;;<br>        &#125;<br>		if ((mdec.btn &amp; <span class="hljs-number">0</span>x04) != <span class="hljs-number">0</span>) &#123;<br>			s[<span class="hljs-number">2</span>] = &#x27;C&#x27;;<br>		&#125;<br>		boxfill8(binfo-&gt;vram, binfo-&gt;scrnx, COL8_008484, <span class="hljs-number">32</span>, <span class="hljs-number">16</span>, <span class="hljs-number">32</span> + <span class="hljs-number">15</span> * <span class="hljs-number">8</span>         - <span class="hljs-number">1</span>, <span class="hljs-number">31</span>);<br>		putfonts8_asc(binfo-&gt;vram, binfo-&gt;scrnx, <span class="hljs-number">32</span>, <span class="hljs-number">16</span>, COL8_FFFFFF, s);<br>		/* 鼠标指针的移动 */<br>	    boxfill8(binfo-&gt;vram, binfo-&gt;scrnx, COL8_008484, mx, my, mx + <span class="hljs-number">15</span>, my         + <span class="hljs-number">15</span>); /* 隐藏鼠标 */<br>		mx += mdec.x;<br>		my += mdec.y;<br>		if (mx &lt; <span class="hljs-number">0</span>) &#123;<br>			mx = <span class="hljs-number">0</span>;<br>		&#125;<br>		if (my &lt; <span class="hljs-number">0</span>) &#123;<br>			my = <span class="hljs-number">0</span>;<br>		&#125;<br>		if (mx &gt; binfo-&gt;scrnx - <span class="hljs-number">16</span>) &#123;<br>			mx = binfo-&gt;scrnx - <span class="hljs-number">16</span>;<br>		&#125;<br>		if (my &gt; binfo-&gt;scrny - <span class="hljs-number">16</span>) &#123;<br>			my = binfo-&gt;scrny - <span class="hljs-number">16</span>;<br>		&#125;<br>		sprintf(s, &quot;(%<span class="hljs-number">3</span>d, %<span class="hljs-number">3</span>d)&quot;, mx, my);<br>		boxfill8(binfo-&gt;vram, binfo-&gt;scrnx, COL8_008484, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">79</span>, <span class="hljs-number">15</span>); /* 隐藏坐标 */<br>		putfonts8_asc(binfo-&gt;vram, binfo-&gt;scrnx, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, COL8_FFFFFF, s); /* 显示坐标 */<br>		putblock8_8(binfo-&gt;vram, binfo-&gt;scrnx, <span class="hljs-number">16</span>, <span class="hljs-number">16</span>, mx, my, mcursor, <span class="hljs-number">16</span>); /* 描画鼠标 */<br>		这段代码是一个用来处理鼠标输入并在屏幕上显示鼠标移动和按钮状态的功能。它依赖于之前的 `mouse_decode` 函数，解码来自鼠标的<span class="hljs-number">3</span>字节数据，并根据鼠标的移动和按钮状态更新屏幕上的显示。下面是详细解析：<br><br>### 功能概述：<br><span class="hljs-number">1</span>. **处理鼠标数据并显示按钮状态：**<br>   - 使用 `mouse_decode(&amp;mdec, i)` 函数解析鼠标传入的数据 `i`，如果返回值不为 <span class="hljs-number">0</span>，表示鼠标的 <span class="hljs-number">3</span> 字节数据已经凑齐并可以进行处理。<br>   - 通过 `sprintf` 将鼠标的 X 和 Y 移动值和按钮状态显示在字符串 `s` 中。<br>   - 根据鼠标按钮的状态，修改字符串中的对应字符：<br>     - 如果左键按下（`btn &amp; <span class="hljs-number">0</span>x01`），把 `s[<span class="hljs-number">1</span>]` 改为 `L`。<br>     - 如果右键按下（`btn &amp; <span class="hljs-number">0</span>x02`），把 `s[<span class="hljs-number">3</span>]` 改为 `R`。<br>     - 如果中键按下（`btn &amp; <span class="hljs-number">0</span>x04`），把 `s[<span class="hljs-number">2</span>]` 改为 `C`。<br>   - 用 `boxfill8` 填充屏幕上的一块区域（擦除以前的显示），然后用 `putfonts8_asc` 在屏幕上显示处理好的字符串 `s`。<br><br><span class="hljs-number">2</span>. **更新鼠标指针的坐标：**<br>   - 使用 `mdec.x` 和 `mdec.y` 更新鼠标的 X 和 Y 位置：<br>     - 通过 `mx += mdec.x` 和 `my += mdec.y`，鼠标的坐标根据上一次的坐标移动。<br>   - 防止鼠标移出屏幕边界：<br>     - 如果 `mx` 小于 <span class="hljs-number">0</span>，设置 `mx = <span class="hljs-number">0</span>`；<br>     - 如果 `my` 小于 <span class="hljs-number">0</span>，设置 `my = <span class="hljs-number">0</span>`；<br>     - 如果 `mx` 超过屏幕宽度（`binfo-&gt;scrnx - <span class="hljs-number">16</span>`），设置 `mx` 为屏幕宽度减去鼠标指针的宽度；<br>     - 如果 `my` 超过屏幕高度（`binfo-&gt;scrny - <span class="hljs-number">16</span>`），设置 `my` 为屏幕高度减去鼠标指针的高度。<br><br><span class="hljs-number">3</span>. **显示鼠标的坐标：**<br>   - 用 `sprintf` 将更新后的鼠标坐标 `(mx, my)` 转换为字符串并显示在屏幕左上角。<br>   - 通过 `boxfill8` 填充屏幕左上角（隐藏旧的坐标），然后用 `putfonts8_asc` 在屏幕上显示新的坐标。<br><br><span class="hljs-number">4</span>. **重新绘制鼠标指针：**<br>   - 使用 `boxfill8` 隐藏原来的鼠标指针，避免旧指针残留在屏幕上。<br>   - 使用 `putblock8_8` 将新的鼠标指针绘制到新的 `(mx, my)` 位置。<br><br>### 核心功能：<br>- **鼠标按钮显示**：显示鼠标的左、中、右按钮状态。<br>- **鼠标移动**：根据鼠标输入的数据更新鼠标在屏幕上的位置，并处理边界情况。<br>- **坐标显示**：实时更新鼠标的 X、Y 坐标并显示在屏幕上。<br>- **指针绘制**：隐藏旧的鼠标指针，重新在新的位置绘制鼠标指针。<br><br>### 关键代码解析：<br>- `mouse_decode(&amp;mdec, i)`：调用鼠标解码函数，如果成功解析到 <span class="hljs-number">3</span> 字节的鼠标数据，则返回非 <span class="hljs-number">0</span> 值。<br>- `sprintf(s, &quot;[lcr %<span class="hljs-number">4</span>d %<span class="hljs-number">4</span>d]&quot;, mdec.x, mdec.y)`：将 X 和 Y 坐标及按钮状态格式化到字符串 `s` 中。<br>- `mx += mdec.x; my += mdec.y;`：根据鼠标的 X 和 Y 变化更新鼠标的当前位置。<br>- `putblock8_8(...)`：在屏幕的 `(mx, my)` 位置绘制鼠标指针。<br><br>这一段代码的作用是实现一个基本的鼠标移动跟踪，并将鼠标移动和点击状态显示在屏幕上，属于操作系统或嵌入式系统中简单的图形界面部分。<br></code></pre></td></tr></table></figure>
+
+<h1 id="进入32位模式"><a href="#进入32位模式" class="headerlink" title="进入32位模式"></a>进入32位模式</h1><ol>
+<li><p>关闭中断</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs bash">;	PIC关闭一切中断<br>;	根据AT兼容机的规格，如果要初始化PIC，<br>;	必须在CLI之前进行，否则有时会挂起。<br>;	随后进行PIC的初始化。<br><br>		MOV		AL,0xff<br>		OUT		0x21,AL<br>		NOP						; 如果连续执行OUT指令，有些机种会无法正常运行<br>		OUT		0xa1,AL<br><br>		CLI						; 禁止CPU级别的中断<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>开启A20信号线,使cpu能访问1MB以上的内容.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs bash">;	为了让CPU能够访问1MB以上的内存空间，设定A20GATE<br><br>		CALL	waitkbdout<br>		MOV		AL,0xd1<br>		OUT		0x64,AL<br>		CALL	waitkbdout<br>		MOV		AL,0xdf			; <span class="hljs-built_in">enable</span> A20<br>		OUT		0x60,AL<br>		CALL	waitkbdout<br><br></code></pre></td></tr></table></figure>
+</li>
+<li><p>切换到保护模式</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs bash">[INSTRSET <span class="hljs-string">&quot;i486p&quot;</span>]				; 说明使用486指令<br><br>		LGDT	[GDTR0]			; 设置临时GDT<br>		MOV		EAX,CR0<br>		AND		EAX,0x7fffffff	; 设bit31为0（禁用分页）<br>		OR		EAX,0x00000001	; bit0到1转换（保护模式过渡）<br>		MOV		CR0,EAX<br>		JMP		pipelineflush<br>pipelineflush:<br>		MOV		AX,1*8			;  可读写的段 32bit<br>		MOV		DS,AX<br>		MOV		ES,AX<br>		MOV		FS,AX<br>		MOV		GS,AX<br>		MOV		SS,AX<br>切换模式后,要刷新流水线<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>bookpack内容传送</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs bash">; bootpack传递<br><br>		MOV		ESI,bootpack	; 转送源<br>		MOV		EDI,BOTPAK		; 转送目标<br>		MOV		ECX,512*1024/4<br>		CALL	memcpy<br><br>; 磁盘数据最终转送到它本来的位置去<br>; 首先从启动扇区开始<br><br>		MOV		ESI,0x7c00		; 转送源<br>		MOV		EDI,DSKCAC		; 转送目标<br>		MOV		ECX,512/4<br>		CALL	memcpy<br><br>; 剩余的全部<br><br>		MOV		ESI,DSKCAC0+512	; 转送源<br>		MOV		EDI,DSKCAC+512	; 转送源目标<br>		MOV		ECX,0<br>		MOV		CL,BYTE [CYLS]<br>		IMUL	ECX,512*18*2/4	; 从柱面数变换为字节数/4<br>		SUB		ECX,512/4		; 减去 IPL 偏移量<br>		CALL	memcpy<br><br>; 必须由asmhead来完成的工作，至此全部完毕<br>; 以后就交由bootpack来完成<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>bookpack启动</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br></pre></td><td class="code"><pre><code class="hljs bash">; bootpack启动<br><br>		MOV		EBX,BOTPAK<br>		MOV		ECX,[EBX+16]<br>		ADD		ECX,3			; ECX += 3;<br>		SHR		ECX,2			; ECX /= 4;<br>		JZ		skip			; 没有要转送的东西时<br>		MOV		ESI,[EBX+20]	; 转送源<br>		ADD		ESI,EBX<br>		MOV		EDI,[EBX+12]	; 转送目标<br>		CALL	memcpy<br>skip:<br>		MOV		ESP,[EBX+12]	; 堆栈的初始化<br>		JMP		DWORD 2*8:0x0000001b<br><br>这段汇编代码实现了 `bootpack` 启动时的部分功能，包括数据的转送和堆栈初始化。以下是代码逐步的详细分析：<br><br><span class="hljs-comment">### 代码功能概述：</span><br><br>1. **转送数据到指定目标地址**：<br>   - 计算需要转送的数据大小。<br>   - 如果有数据要转送，则调用 `memcpy` 函数，将数据从源地址复制到目标地址。<br><br>2. **初始化堆栈指针 (`ESP`)**：<br>   - 设置堆栈指针，准备跳转到程序的执行地址。<br><br>3. **跳转到指定位置执行**：<br>   - 跳转到程序入口地址 `0x0000001b`，开始执行主程序。<br><br><span class="hljs-comment">### 逐步解析：</span><br><br>```asm<br>MOV     EBX,BOTPAK<br>```<br>- 将 `BOTPAK` 的地址存入 `EBX`，`BOTPAK` 是程序或数据包的起始地址。<br><br>```asm<br>MOV     ECX,[EBX+16]<br>ADD     ECX,3          ; ECX += 3;<br>SHR     ECX,2          ; ECX /= 4;<br>```<br>- 这段代码的目的是计算要转送的数据大小。<br>- `MOV ECX,[EBX+16]`：从 `EBX` 地址偏移 16 字节处（可能是数据长度字段）加载数据大小到 `ECX`。<br>- `ADD ECX,3`：为了保证数据是以 4 字节对齐，所以先将 `ECX` 增加 3，保证数据向上取整。<br>- `SHR ECX,2`：将 `ECX` 右移 2 位，即除以 4，将字节数转换为 4 字节的单位。<br><br>```asm<br>JZ      skip<br>```<br>- 检查 `ECX` 是否为 0，如果为 0 则表示没有数据需要转送，跳转到 `skip` 标签处，跳过数据转送部分。<br><br>```asm<br>MOV     ESI,[EBX+20]    ; 转送源<br>ADD     ESI,EBX<br>MOV     EDI,[EBX+12]    ; 转送目标<br>CALL    memcpy<br>```<br>- 开始进行数据的转送操作：<br>  - `MOV ESI,[EBX+20]`：从 `EBX` 地址偏移 20 字节处读取源地址，并存入 `ESI`（源地址寄存器）。<br>  - `ADD ESI,EBX`：将源地址加上 `EBX`，得到源数据的实际地址。<br>  - `MOV EDI,[EBX+12]`：从 `EBX` 地址偏移 12 字节处读取目标地址，并存入 `EDI`（目标地址寄存器）。<br>  - `CALL memcpy`：调用 `memcpy` 函数，将数据从 `ESI` 指向的源地址复制到 `EDI` 指向的目标地址。<br><br>```asm<br>skip:<br>MOV     ESP,[EBX+12]    ; 堆栈的初始化<br>```<br>- 初始化堆栈指针：<br>  - `MOV ESP,[EBX+12]`：从 `EBX` 地址偏移 12 字节处读取堆栈指针的初始值，并将其赋值给 `ESP`，这将堆栈初始化为正确的值。<br><br>```asm<br>JMP     DWORD 2*8:0x0000001b<br>```<br>- 跳转到程序的入口地址：<br>  - 通过 `JMP DWORD 2*8:0x0000001b` 语句进行远程跳转。这里的 `2*8` 表示使用段选择子 2 的 8 字节倍数（也就是段选择子 16），`0x0000001b` 是目标偏移地址，表示跳转到物理地址 `0x0000001b` 开始执行程序。<br><br><span class="hljs-comment">### 总结：</span><br>这段代码的主要作用是：<br>1. **数据搬移**：根据从 `BOTPAK` 处读取的元数据，判断是否需要转送某段数据。如果需要，将数据从源地址复制到目标地址。<br>2. **堆栈初始化**：设置堆栈指针，以便程序能够正确使用堆栈。<br>3. **跳转到程序入口**：最终跳转到指定的程序入口地址，开始执行程序。<br><br>这段代码通常出现在一个启动加载程序中，在系统启动时，将内存中的某些数据搬移到正确的地方，并且初始化堆栈，最后跳转到内核或主程序的入口处。<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>内存分布图</p>
+<p><img src="C:\Users\HP\AppData\Roaming\Typora\typora-user-images\image-20241012211859799.png" srcset="/img/loading.gif" lazyload alt="image-20241012211859799">7.一些函数</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs bash">waitkbdout:<br>		IN		AL,0x64<br>		AND		AL,0x02<br>		IN		AL,0x60			; 空读（为了清空数据接收缓冲区中的垃圾数据）<br>		JNZ		waitkbdout	; AND的结果如果不是0，就跳到waitkbdout<br>		RET<br><br>memcpy:<br>		MOV		EAX,[ESI]<br>		ADD		ESI,4<br>		MOV		[EDI],EAX<br>		ADD		EDI,4<br>		SUB		ECX,1<br>		JNZ		memcpy			; 减法运算的结果如果不是0，就跳转到memcpy<br>		RET<br>; memcpy地址前缀大小<br><br>		ALIGNB	16<br>GDT0:<br>		RESB	8				; 初始值<br>		DW		0xffff,0x0000,0x9200,0x00cf	; 可以读写的段（segment）32bit<br>		DW		0xffff,0x0000,0x9a28,0x0047	; 可执行的文件的32bit寄存器（bootpack用）<br><br>		DW		0<br>GDTR0:<br>		DW		8*3-1<br>		DD		GDT0<br><br>		ALIGNB	16<br>bootpack:<br></code></pre></td></tr></table></figure></li>
+</ol>
+</li>
+</ol>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>08_DAY</div>
+      <div>https://lhhi.github.io/2024/10/12/08-DAY/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>hachui</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年10月12日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2024/10/13/09-DAY/" title="09_DAY">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">09_DAY</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/10/11/07-DAy/" title="07_DAy">
+                        <span class="hidden-mobile">07_DAy</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://cdn.jsdelivr.net/npm/tocbot@4.12.2/dist/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

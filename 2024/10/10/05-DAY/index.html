@@ -1,0 +1,693 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=dark>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.ico">
+  <link rel="icon" href="/img/myfavicon.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="hachui">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="结构体内容地址连续 显示字符1.描绘像素 123456789101112131415161718void putfont8(char *vram, int xsize, int x, int y, char c, char *font)&#123;	int i;	char *p, d &#x2F;* data *&#x2F;;	for (i &#x3D; 0; i &lt; 16; i++) &#123;		p &#x3D; vram">
+<meta property="og:type" content="article">
+<meta property="og:title" content="05_DAY">
+<meta property="og:url" content="https://lhhi.github.io/2024/10/10/05-DAY/index.html">
+<meta property="og:site_name" content="hui&#39;s blog">
+<meta property="og:description" content="结构体内容地址连续 显示字符1.描绘像素 123456789101112131415161718void putfont8(char *vram, int xsize, int x, int y, char c, char *font)&#123;	int i;	char *p, d &#x2F;* data *&#x2F;;	for (i &#x3D; 0; i &lt; 16; i++) &#123;		p &#x3D; vram">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-10-10T00:46:09.000Z">
+<meta property="article:modified_time" content="2024-10-10T01:00:47.608Z">
+<meta property="article:author" content="hachui">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>05_DAY - hui&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/custom.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"lhhi.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null},"gtag":null,"woyaola":null,"cnzz":null},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Hui&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/bg/%E6%96%B0%E6%B5%B7%E5%A4%A9815.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="05_DAY"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-10-10 08:46" pubdate>
+          2024年10月10日 早上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          <!-- compatible with older versions-->
+          2.1k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          <!-- compatible with older versions-->
+          18 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">05_DAY</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="结构体"><a href="#结构体" class="headerlink" title="结构体"></a>结构体</h1><p>内容地址连续</p>
+<h1 id="显示字符"><a href="#显示字符" class="headerlink" title="显示字符"></a>显示字符</h1><p>1.描绘像素</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs bash">void putfont8(char *vram, int xsize, int x, int y, char c, char *font)<br>&#123;<br>	int i;<br>	char *p, d /* data */;<br>	<span class="hljs-keyword">for</span> (i = 0; i &lt; 16; i++) &#123;<br>		p = vram + (y + i) * xsize + x;<br>		d = font[i];<br>		<span class="hljs-keyword">if</span> ((d &amp; <span class="hljs-number">0</span>x80) != <span class="hljs-number">0</span>) &#123; p[<span class="hljs-number">0</span>] = c; &#125;<br>		if ((d &amp; <span class="hljs-number">0</span>x40) != <span class="hljs-number">0</span>) &#123; p[<span class="hljs-number">1</span>] = c; &#125;<br>		if ((d &amp; <span class="hljs-number">0</span>x20) != <span class="hljs-number">0</span>) &#123; p[<span class="hljs-number">2</span>] = c; &#125;<br>		if ((d &amp; <span class="hljs-number">0</span>x10) != <span class="hljs-number">0</span>) &#123; p[<span class="hljs-number">3</span>] = c; &#125;<br>		if ((d &amp; <span class="hljs-number">0</span>x08) != <span class="hljs-number">0</span>) &#123; p[<span class="hljs-number">4</span>] = c; &#125;<br>		if ((d &amp; <span class="hljs-number">0</span>x04) != <span class="hljs-number">0</span>) &#123; p[<span class="hljs-number">5</span>] = c; &#125;<br>		if ((d &amp; <span class="hljs-number">0</span>x02) != <span class="hljs-number">0</span>) &#123; p[<span class="hljs-number">6</span>] = c; &#125;<br>		if ((d &amp; <span class="hljs-number">0</span>x01) != <span class="hljs-number">0</span>) &#123; p[<span class="hljs-number">7</span>] = c; &#125;<br>	&#125;<br>	return;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>2.sprintf</p>
+<p>sprintf(地址,格式,值,值,…);</p>
+<h1 id="描绘鼠标"><a href="#描绘鼠标" class="headerlink" title="描绘鼠标"></a>描绘鼠标</h1><p>和显示文字一样的思路</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><code class="hljs bash">void init_mouse_cursor8(char *mouse, char bc)<br>/* マウスカーソルを準備（16x16） */<br>&#123;<br>	static char cursor[16][16] = &#123;<br>		<span class="hljs-string">&quot;**************..&quot;</span>,<br>		<span class="hljs-string">&quot;*OOOOOOOOOOO*...&quot;</span>,<br>		<span class="hljs-string">&quot;*OOOOOOOOOO*....&quot;</span>,<br>		<span class="hljs-string">&quot;*OOOOOOOOO*.....&quot;</span>,<br>		<span class="hljs-string">&quot;*OOOOOOOO*......&quot;</span>,<br>		<span class="hljs-string">&quot;*OOOOOOO*.......&quot;</span>,<br>		<span class="hljs-string">&quot;*OOOOOOO*.......&quot;</span>,<br>		<span class="hljs-string">&quot;*OOOOOOOO*......&quot;</span>,<br>		<span class="hljs-string">&quot;*OOOO**OOO*.....&quot;</span>,<br>		<span class="hljs-string">&quot;*OOO*..*OOO*....&quot;</span>,<br>		<span class="hljs-string">&quot;*OO*....*OOO*...&quot;</span>,<br>		<span class="hljs-string">&quot;*O*......*OOO*..&quot;</span>,<br>		<span class="hljs-string">&quot;**........*OOO*.&quot;</span>,<br>		<span class="hljs-string">&quot;*..........*OOO*&quot;</span>,<br>		<span class="hljs-string">&quot;............*OO*&quot;</span>,<br>		<span class="hljs-string">&quot;.............***&quot;</span><br>	&#125;;<br>	int x, y;<br><br>	<span class="hljs-keyword">for</span> (y = 0; y &lt; 16; y++) &#123;<br>		<span class="hljs-keyword">for</span> (x = 0; x &lt; 16; x++) &#123;<br>			<span class="hljs-keyword">if</span> (cursor[y][x] == <span class="hljs-string">&#x27;*&#x27;</span>) &#123;<br>				mouse[y * 16 + x] = COL8_000000;<br>			&#125;<br>			<span class="hljs-keyword">if</span> (cursor[y][x] == <span class="hljs-string">&#x27;O&#x27;</span>) &#123;<br>				mouse[y * 16 + x] = COL8_FFFFFF;<br>			&#125;<br>			<span class="hljs-keyword">if</span> (cursor[y][x] == <span class="hljs-string">&#x27;.&#x27;</span>) &#123;<br>				mouse[y * 16 + x] = bc;<br>			&#125;<br>		&#125;<br>	&#125;<br>	<span class="hljs-built_in">return</span>;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs bash">void putblock8_8(char *vram, int vxsize, int pxsize,<br>	int pysize, int px0, int py0, char *buf, int bxsize)<br>&#123;<br>	int x, y;<br>	<span class="hljs-keyword">for</span> (y = 0; y &lt; pysize; y++) &#123;<br>		<span class="hljs-keyword">for</span> (x = 0; x &lt; pxsize; x++) &#123;<br>			vram[(py0 + y) * vxsize + (px0 + x)] = buf[y * bxsize + x];<br>		&#125;<br>	&#125;<br>	<span class="hljs-built_in">return</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h1 id="GDT和IDT"><a href="#GDT和IDT" class="headerlink" title="GDT和IDT"></a>GDT和IDT</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs bash"><br>在操作系统中，GDT（Global Descriptor Table，全局描述符表）是一种用于内存段管理的数据结构，主要用于定义系统中各个段的属性和权限。在x86架构的处理器中，GDT是内存分段机制的核心部分，负责描述内存段的信息，比如代码段、数据段、堆栈段等。<br><br>GDT的作用<br>GDT的主要作用是通过段描述符来定义内存段的基址、长度以及访问权限。每个GDT条目都称为一个段描述符，它包含以下信息：<br><br>基址（Base）：段在内存中的起始地址。<br>段界限（Limit）：段的大小（即段的长度），通常是以字节为单位的一个值。<br>段的类型和属性：包括该段是否可读、可写、可执行，以及该段是系统段还是用户段等信息。<br>特权级别（Privilege Level）：用于定义对段的访问权限，分为0到3级，0级为最高权限，3级为最低权限。<br></code></pre></td></tr></table></figure>
+
+<p>初始化GDT</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><code class="hljs bash">这个结构体 SEGMENT_DESCRIPTOR 是一个典型的用于描述段描述符的结构，在类似x86的操作系统或底层内核开发中经常见到。它的目的是定义段的起始地址（基址）和大小（段界限），以及访问权限等属性，通常用于全局描述符表（GDT）或局部描述符表（LDT）中。<br><br>解析这个结构体：<br>c<br>复制代码<br>struct SEGMENT_DESCRIPTOR &#123;<br>    short limit_low;    // 段界限的低16位<br>    short base_low;     // 段基址的低16位<br>    char base_mid;      // 段基址的中8位<br>    char access_right;  // 访问权限<br>    char limit_high;    // 段界限的高4位 + 其他标志位<br>    char base_high;     // 段基址的高8位<br>&#125;;<br>各字段的意义：<br>limit_low (段界限低位)：<br><br>用于描述段的大小，表示段的长度。这个字段存储段界限的低16位。<br>base_low (基址低位)：<br><br>描述段在内存中的起始地址（基址），这个字段存储基址的低16位。<br>base_mid (基址中位)：<br><br>存储段基址的中间8位。<br>access_right (访问权限)：<br><br>用于定义段的访问权限和属性，比如是否可读、可写、可执行，段的特权级别（ring 0到ring 3），段是否存在等。典型的访问权限标志包括：<br>P (Present)：段是否存在。<br>DPL (Descriptor Privilege Level)：段的权限等级。<br>S：描述符类型，指明是系统段还是代码/数据段。<br>Type：定义段的具体类型，如可执行、可读、可写等。<br>limit_high (段界限高位)：<br><br>段界限的高4位，剩余的4位通常存储其他标志位（如G和D/B标志）。<br>G (Granularity)：段界限的粒度，决定界限以字节为单位还是4KB为单位。<br>D/B (Size)：控制段的操作数大小，通常用于指定是否是16位还是32位段。<br>base_high (基址高位)：<br><br>存储段基址的高8位。<br>整个结构体的作用：<br>这个结构体提供了一种存储段描述符信息的方式。通过这个结构，操作系统可以定义每个内存段的起始地址、大小、权限以及如何访问这些段。<br>通常，在保护模式下，处理器会通过GDT或LDT来管理段描述符。每次访问内存时，都会用段选择子查找GDT/LDT中的段描述符，并根据这个结构体中的信息确定具体的内存地址和访问权限<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><code class="hljs bash">void init_gdtidt(void)<br>&#123;<br>	struct SEGMENT_DESCRIPTOR *gdt = (struct SEGMENT_DESCRIPTOR *) 0x00270000;<br>	struct GATE_DESCRIPTOR    *idt = (struct GATE_DESCRIPTOR    *) 0x0026f800;<br>	int i;<br><br>	/* GDT初始化 */<br>	<span class="hljs-keyword">for</span> (i = 0; i &lt; 8192; i++) &#123;<br>		set_segmdesc(gdt + i, 0, 0, 0);<br>	&#125;<br>	set_segmdesc(gdt + 1, 0xffffffff, 0x00000000, 0x4092);<br>	set_segmdesc(gdt + 2, 0x0007ffff, 0x00280000, 0x409a);<br>	load_gdtr(0xffff, 0x00270000);<br><br>	/* IDT初始化 */<br>	<span class="hljs-keyword">for</span> (i = 0; i &lt; 256; i++) &#123;<br>		set_gatedesc(idt + i, 0, 0, 0);<br>	&#125;<br>	load_idtr(0x7ff, 0x0026f800);<br><br>	<span class="hljs-built_in">return</span>;<br>&#125;<br><br>void set_segmdesc(struct SEGMENT_DESCRIPTOR *sd, unsigned int <span class="hljs-built_in">limit</span>, int base, int ar)<br>&#123;<br>	<span class="hljs-keyword">if</span> (<span class="hljs-built_in">limit</span> &gt; 0xfffff) &#123;<br>		ar |= 0x8000; /* G_bit = 1 */<br>		<span class="hljs-built_in">limit</span> /= 0x1000;<br>	&#125;<br>	sd-&gt;limit_low    = <span class="hljs-built_in">limit</span> &amp; 0xffff;<br>	sd-&gt;base_low     = base &amp; 0xffff;<br>	sd-&gt;base_mid     = (base &gt;&gt; 16) &amp; 0xff;<br>	sd-&gt;access_right = ar &amp; 0xff;<br>	sd-&gt;limit_high   = ((limit &gt;&gt; <span class="hljs-number">16</span>) &amp; <span class="hljs-number">0</span>x0f) | ((ar &gt;&gt; <span class="hljs-number">8</span>) &amp; <span class="hljs-number">0</span>xf0);<br>	sd-&gt;base_high    = (base &gt;&gt; <span class="hljs-number">24</span>) &amp; <span class="hljs-number">0</span>xff;<br>	return;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><code class="hljs bash"><br>GATE_DESCRIPTOR 结构体通常用于描述 中断门（Interrupt Gate）、陷阱门（Trap Gate）、或者 调用门（Call Gate）等，在x86架构的保护模式下用于中断处理、异常处理和系统调用等机制。这些门描述符位于 IDT（中断描述符表，Interrupt Descriptor Table）中，用于定义当某个中断或异常发生时，处理器如何跳转到相应的处理程序。<br><br>解析这个结构体：<br>c<br>复制代码<br>struct GATE_DESCRIPTOR &#123;<br>    short offset_low;     // 偏移地址的低16位<br>    short selector;       // 段选择子<br>    char dw_count;        // 如果是调用门，表示堆栈要复制的参数个数，其他类型忽略<br>    char access_right;    // 门的属性和访问权限<br>    short offset_high;    // 偏移地址的高16位<br>&#125;;<br>各字段的意义：<br>offset_low（偏移地址低位）：<br><br>存储目标处理程序地址（也就是中断处理程序、陷阱处理程序等）的低16位。即，处理器在中断或异常发生时，会跳转到这个地址开始执行中断服务程序。<br>selector（段选择子）：<br><br>段选择子，通常指向内核的代码段（一般是GDT中的代码段描述符）。当中断或异常发生时，处理器根据该选择子找到正确的段，结合偏移量来确定要跳转的地址。<br>dw_count：<br><br>对于调用门（Call Gate）描述符，这个字段表示从调用者堆栈复制到新的堆栈的参数个数。在中断门和陷阱门中，这个字段通常为0，不起作用。<br>access_right（访问权限）：<br><br>这个字段定义了描述符的类型、特权级别以及门的相关属性。它的具体内容可能包括以下几位：<br>P (Present)：门描述符是否有效（是否存在）。<br>DPL (Descriptor Privilege Level)：描述符的特权级别，0为最高（内核态），3为最低（用户态）。这决定了哪些特权级别的代码可以使用此门。<br>Type：描述符的类型。常见类型包括中断门、陷阱门、调用门等。对于中断门和陷阱门，Type 会定义这是硬件中断、软件中断还是异常处理。<br>D：决定门描述符是32位（D=1）还是16位（D=0）。<br>offset_high（偏移地址高位）：<br><br>存储目标处理程序地址的高16位。结合offset_low，这两个字段共同组成完整的处理程序地址（32位）。<br>GATE_DESCRIPTOR 的作用<br>中断门：处理器在中断发生时，通过中断向量从IDT中找到对应的GATE_DESCRIPTOR，然后使用描述符中的信息跳转到相应的中断处理程序。<br>陷阱门：类似于中断门，但通常用于同步事件，比如软件异常。<br>调用门：用于跨段调用不同特权级别的代码。<br>示例说明：<br>当硬件中断或软件异常发生时，处理器会根据中断向量从 IDT 中查找对应的 GATE_DESCRIPTOR。通过该描述符，处理器可以找到处理程序的地址（由offset_low和offset_high指定），并使用selector指定的代码段，跳转到正确的内存位置执行中断处理程序。<br><br>总结：<br>GATE_DESCRIPTOR 结构体为处理器提供了一个用于管理中断、异常和系统调用的机制，确保在系统中断或异常时能够正确跳转到对应的服务程序，并安全、稳定地执行。<br></code></pre></td></tr></table></figure>
+
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>05_DAY</div>
+      <div>https://lhhi.github.io/2024/10/10/05-DAY/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>hachui</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年10月10日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2024/10/10/06-DAY/" title="06_DAY">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">06_DAY</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/10/09/04-Day/" title="04_Day">
+                        <span class="hidden-mobile">04_Day</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://cdn.jsdelivr.net/npm/tocbot@4.12.2/dist/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
