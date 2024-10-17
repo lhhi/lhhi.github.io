@@ -19,21 +19,21 @@
   <meta name="author" content="hachui">
   <meta name="keywords" content="">
   
-    <meta name="description" content="内存容量检查 关闭缓存 123456789101112131415161718192021222324252627282930313233unsigned int memtest(unsigned int start, unsigned int end) &#123;	char flg486 &#x3D; 0;	unsigned int eflg, cr0, i;	&#x2F;* 确认CPU是386还是486以上的">
+    <meta name="description" content="制作窗口 制作图层 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950void make_window8(unsigned char *buf, int xsize, int ysize, char *title)&#123;	static char closebtn">
 <meta property="og:type" content="article">
-<meta property="og:title" content="09_DAY">
-<meta property="og:url" content="https://lhhi.github.io/2024/10/13/09-DAY/index.html">
+<meta property="og:title" content="11_DAY">
+<meta property="og:url" content="https://lhhi.github.io/2024/10/15/11-DAY/index.html">
 <meta property="og:site_name" content="hui&#39;s blog">
-<meta property="og:description" content="内存容量检查 关闭缓存 123456789101112131415161718192021222324252627282930313233unsigned int memtest(unsigned int start, unsigned int end) &#123;	char flg486 &#x3D; 0;	unsigned int eflg, cr0, i;	&#x2F;* 确认CPU是386还是486以上的">
+<meta property="og:description" content="制作窗口 制作图层 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950void make_window8(unsigned char *buf, int xsize, int ysize, char *title)&#123;	static char closebtn">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2024-10-13T01:42:32.000Z">
-<meta property="article:modified_time" content="2024-10-13T01:52:38.034Z">
+<meta property="article:published_time" content="2024-10-15T05:17:11.000Z">
+<meta property="article:modified_time" content="2024-10-15T05:47:35.949Z">
 <meta property="article:author" content="hachui">
 <meta name="twitter:card" content="summary_large_image">
   
   
   
-  <title>09_DAY - hui&#39;s blog</title>
+  <title>11_DAY - hui&#39;s blog</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
 
@@ -203,7 +203,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="09_DAY"></span>
+            <span id="subtitle" data-typed-text="11_DAY"></span>
           
         </div>
 
@@ -214,8 +214,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-10-13 09:42" pubdate>
-          2024年10月13日 上午
+        <time datetime="2024-10-15 13:17" pubdate>
+          2024年10月15日 下午
         </time>
       </span>
     
@@ -227,7 +227,7 @@
         <i class="iconfont icon-chart"></i>
         
           <!-- compatible with older versions-->
-          866 字
+          819 字
         
       </span>
     
@@ -239,7 +239,7 @@
         
         
           <!-- compatible with older versions-->
-          8 分钟
+          7 分钟
         
       </span>
     
@@ -276,32 +276,22 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">09_DAY</h1>
+            <h1 id="seo-header">11_DAY</h1>
             
             
               <div class="markdown-body">
                 
-                <h1 id="内存容量检查"><a href="#内存容量检查" class="headerlink" title="内存容量检查"></a>内存容量检查</h1><ol>
-<li><p>关闭缓存</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><code class="hljs bash">unsigned int memtest(unsigned int start, unsigned int end) <br>&#123;<br>	char flg486 = 0;<br>	unsigned int eflg, cr0, i;<br><br>	/* 确认CPU是386还是486以上的 */<br>	eflg = io_load_eflags();<br>	eflg |= EFLAGS_AC_BIT; /* AC-bit = 1 */<br>	io_store_eflags(eflg);<br>	eflg = io_load_eflags();<br>	<span class="hljs-keyword">if</span> ((eflg &amp; EFLAGS_AC_BIT) != <span class="hljs-number">0</span>) &#123;<br>		/* 如果是<span class="hljs-number">386</span>，即使设定AC=<span class="hljs-number">1</span>，AC的值还会自动回到<span class="hljs-number">0</span> */<br>		flg486 = <span class="hljs-number">1</span>;<br>	&#125;<br><br>	eflg &amp;= ~EFLAGS_AC_BIT; /* AC-bit = <span class="hljs-number">0</span> */<br>	io_store_eflags(eflg);<br><br>	if (flg486 != <span class="hljs-number">0</span>) &#123;<br>		cr0 = load_cr0();<br>		cr0 |= CR0_CACHE_DISABLE; /* 禁止缓存 */ <br>		store_cr0(cr0);<br>	&#125;<br><br>	i = memtest_sub(start, end);<br><br>	if (flg486 != <span class="hljs-number">0</span>) &#123;<br>		cr0 = load_cr0();<br>		cr0 &amp;= ~CR0_CACHE_DISABLE; /* 允许缓存 */<br>		store_cr0(cr0);<br>	&#125;<br>	return i;<br>&#125;<br></code></pre></td></tr></table></figure>
+                <h1 id="制作窗口"><a href="#制作窗口" class="headerlink" title="制作窗口"></a>制作窗口</h1><ol>
+<li><p>制作图层</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><code class="hljs bash">void make_window8(unsigned char *buf, int xsize, int ysize, char *title)<br>&#123;<br>	static char closebtn[14][16] = &#123;<br>		<span class="hljs-string">&quot;OOOOOOOOOOOOOOO@&quot;</span>,<br>		<span class="hljs-string">&quot;OQQQQQQQQQQQQQ<span class="hljs-variable">$@</span>&quot;</span>,<br>		<span class="hljs-string">&quot;OQQQQQQQQQQQQQ<span class="hljs-variable">$@</span>&quot;</span>,<br>		<span class="hljs-string">&quot;OQQQ@@QQQQ@@QQ<span class="hljs-variable">$@</span>&quot;</span>,<br>		<span class="hljs-string">&quot;OQQQQ@@QQ@@QQQ<span class="hljs-variable">$@</span>&quot;</span>,<br>		<span class="hljs-string">&quot;OQQQQQ@@@@QQQQ<span class="hljs-variable">$@</span>&quot;</span>,<br>		<span class="hljs-string">&quot;OQQQQQQ@@QQQQQ<span class="hljs-variable">$@</span>&quot;</span>,<br>		<span class="hljs-string">&quot;OQQQQQ@@@@QQQQ<span class="hljs-variable">$@</span>&quot;</span>,<br>		<span class="hljs-string">&quot;OQQQQ@@QQ@@QQQ<span class="hljs-variable">$@</span>&quot;</span>,<br>		<span class="hljs-string">&quot;OQQQ@@QQQQ@@QQ<span class="hljs-variable">$@</span>&quot;</span>,<br>		<span class="hljs-string">&quot;OQQQQQQQQQQQQQ<span class="hljs-variable">$@</span>&quot;</span>,<br>		<span class="hljs-string">&quot;OQQQQQQQQQQQQQ<span class="hljs-variable">$@</span>&quot;</span>,<br>		<span class="hljs-string">&quot;O$$$$$$$$$$$$$<span class="hljs-variable">$@</span>&quot;</span>,<br>		<span class="hljs-string">&quot;@@@@@@@@@@@@@@@@&quot;</span><br>	&#125;;<br><br>	int x, y;<br>	char c;<br>	boxfill8(buf, xsize, COL8_C6C6C6, 0, 0, xsize - 1, 0 );<br>	boxfill8(buf, xsize, COL8_FFFFFF, 1, 1, xsize - 2, 1 );<br>	boxfill8(buf, xsize, COL8_C6C6C6, 0, 0, 0, ysize - 1);<br>	boxfill8(buf, xsize, COL8_FFFFFF, 1, 1, 1, ysize - 2);<br>	boxfill8(buf, xsize, COL8_848484, xsize - 2, 1, xsize - 2, ysize - 2);<br>	boxfill8(buf, xsize, COL8_000000, xsize - 1, 0, xsize - 1, ysize - 1);<br>	boxfill8(buf, xsize, COL8_C6C6C6, 2, 2, xsize - 3, ysize - 3);<br>	boxfill8(buf, xsize, COL8_000084, 3, 3, xsize - 4, 20 );<br>	boxfill8(buf, xsize, COL8_848484, 1, ysize - 2, xsize - 2, ysize - 2);<br>	boxfill8(buf, xsize, COL8_000000, 0, ysize - 1, xsize - 1, ysize - 1);<br>	putfonts8_asc(buf, xsize, 24, 4, COL8_FFFFFF, title);<br><br>	<span class="hljs-keyword">for</span> (y = 0; y &lt; 14; y++) &#123;<br>		<span class="hljs-keyword">for</span> (x = 0; x &lt; 16; x++) &#123;<br>			c = closebtn[y][x];<br>			<span class="hljs-keyword">if</span> (c == <span class="hljs-string">&#x27;@&#x27;</span>) &#123;<br>				c = COL8_000000;<br>			&#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (c == <span class="hljs-string">&#x27;$&#x27;</span>) &#123;<br>				c = COL8_848484;<br>			&#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (c == <span class="hljs-string">&#x27;Q&#x27;</span>) &#123;<br>				c = COL8_C6C6C6;<br>			&#125; <span class="hljs-keyword">else</span> &#123;<br>				c = COL8_FFFFFF;<br>			&#125;<br>			buf[(5 + y) * xsize + (xsize - 21 + x)] = c;<br>		&#125;<br>	&#125;<br>	<span class="hljs-built_in">return</span>;<br>&#125;//绘制一个窗口图形<br></code></pre></td></tr></table></figure>
 </li>
-<li><p>检查内存</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><code class="hljs bash">_memtest_sub:	; unsigned int memtest_sub(unsigned int start, unsigned int end)<br>		PUSH	EDI						; （由于还要使用EBX, ESI, EDI）<br>		PUSH	ESI<br>		PUSH	EBX<br>		MOV		ESI,0xaa55aa55			; pat0 = 0xaa55aa55;<br>		MOV		EDI,0x55aa55aa			; pat1 = 0x55aa55aa;<br>		MOV		EAX,[ESP+12+4]			; i = start;<br>mts_loop:<br>		MOV		EBX,EAX<br>		ADD		EBX,0xffc				; p = i + 0xffc;<br>		MOV		EDX,[EBX]				; old = *p;<br>		MOV		[EBX],ESI				; *p = pat0;<br>		XOR		DWORD [EBX],0xffffffff	; *p ^= 0xffffffff;<br>		CMP		EDI,[EBX]				; <span class="hljs-keyword">if</span> (*p != pat1) goto fin;<br>		JNE		mts_fin<br>		XOR		DWORD [EBX],0xffffffff	; *p ^= 0xffffffff;<br>		CMP		ESI,[EBX]				; <span class="hljs-keyword">if</span> (*p != pat0) goto fin;<br>		JNE		mts_fin<br>		MOV		[EBX],EDX				; *p = old;<br>		ADD		EAX,0x1000				; i += 0x1000;<br>		CMP		EAX,[ESP+12+8]			; <span class="hljs-keyword">if</span> (i &lt;= end) goto mts_loop;<br>		JBE		mts_loop<br>		POP		EBX<br>		POP		ESI<br>		POP		EDI<br>		RET<br>mts_fin:<br>		MOV		[EBX],EDX				; *p = old;<br>		POP		EBX<br>		POP		ESI<br>		POP		EDI<br>		RET<br></code></pre></td></tr></table></figure>
-
-<h1 id="分配内存"><a href="#分配内存" class="headerlink" title="分配内存"></a>分配内存</h1><ol>
-<li><p>建列表记录可用内存的地址和大小</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment">#define MEMMAN_FREES 4090 /* 大约是32KB*/</span><br><br>struct FREEINFO &#123; /* 可用信息 */<br>	unsigned int addr, size;<br>&#125;;<br>struct MEMMAN &#123; /* 内存管理 */<br>	int frees, maxfrees, lostsize, losts;<br>	struct FREEINFO free[MEMMAN_FREES];<br>&#125;;<br></code></pre></td></tr></table></figure>
+<li><p>完成窗口的初始化</p>
 </li>
-<li><p>初始化</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs bash">void memman_init(struct MEMMAN *man)&#123;<br>	man-&gt;frees = 0;    /* 可用信息数目 */<br>	man-&gt;maxfrees = 0; /* 用于观察可用状况：frees的最大值 */<br>	man-&gt;lostsize = 0; /* 释放失败的内存的大小总和 */<br>	man-&gt;losts = 0;    /* 释放失败次数 */<br>	<span class="hljs-built_in">return</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<li><p>消除闪烁</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><code class="hljs bash">//加快刷新<br>void sheet_refresh(struct SHEET *sht, int bx0, int by0, int bx1, int by1)<br>&#123;<br>	<span class="hljs-keyword">if</span> (sht-&gt;height &gt;= 0) &#123; /* 如果正在显示，则按新图层的信息刷新画面*/<br>		sheet_refreshsub(sht-&gt;ctl, sht-&gt;vx0 + bx0, sht-&gt;vy0 + by0, sht-&gt;vx0 + bx1, sht-&gt;vy0 + by1, sht-&gt;height, sht-&gt;height);<br>	&#125;<br>	<span class="hljs-built_in">return</span>;<br>&#125;<br>//对改变的图层进行刷新<br>void sheet_refreshsub(struct SHTCTL *ctl, int vx0, int vy0, int vx1, int vy1, int h0, int h1)<br>&#123;<br>	int h, bx, by, vx, vy, bx0, by0, bx1, by1;<br>	unsigned char *buf, *vram = ctl-&gt;vram, *map = ctl-&gt;map, sid;<br>	struct SHEET *sht;<br><br>	/* 如果refresh的范围超出了画面则修正 */<br>	<span class="hljs-keyword">if</span> (vx0 &lt; 0) &#123; vx0 = 0; &#125;<br>	<span class="hljs-keyword">if</span> (vy0 &lt; 0) &#123; vy0 = 0; &#125;<br>	<span class="hljs-keyword">if</span> (vx1 &gt; ctl-&gt;xsize) &#123; vx1 = ctl-&gt;xsize; &#125;<br>	<span class="hljs-keyword">if</span> (vy1 &gt; ctl-&gt;ysize) &#123; vy1 = ctl-&gt;ysize; &#125;<br><br>	<span class="hljs-keyword">for</span> (h = h0; h &lt;= ctl-&gt;top; h++) &#123;<br>		sht = ctl-&gt;sheets[h];<br>		buf = sht-&gt;buf;<br>		sid = sht -ctl-&gt;sheets0;<br><br>		/* 使用vx0～vy1，对bx0～by1进行倒推 */<br>		bx0 = vx0 - sht-&gt;vx0;<br>		by0 = vy0 - sht-&gt;vy0;<br>		bx1 = vx1 - sht-&gt;vx0;<br>		by1 = vy1 - sht-&gt;vy0;<br>		<span class="hljs-keyword">if</span> (bx0 &lt; 0) &#123; bx0 = 0; &#125; /* 处理刷新范围在图层外侧 */<br>		<span class="hljs-keyword">if</span> (by0 &lt; 0) &#123; by0 = 0; &#125;<br>		<span class="hljs-keyword">if</span> (bx1 &gt; sht-&gt;bxsize) &#123; bx1 = sht-&gt;bxsize; &#125; /* 应对不同的重叠方式 */<br>		<span class="hljs-keyword">if</span> (by1 &gt; sht-&gt;bysize) &#123; by1 = sht-&gt;bysize; &#125;<br><br>		<span class="hljs-keyword">for</span> (by = by0; by &lt; by1; by++) &#123;<br>			vy = sht-&gt;vy0 + by;<br>			<span class="hljs-keyword">for</span> (bx = bx0; bx &lt; bx1; bx++) &#123;<br>				vx = sht-&gt;vx0 + bx;<br>				<span class="hljs-keyword">if</span> (map[vy * ctl-&gt;xsize + vx] == sid) &#123;<br>					vram[vy * ctl-&gt;xsize + vx] = buf[by * sht-&gt;bxsize + bx];<br>				&#125;<br>			&#125;<br>		&#125;<br>	&#125;<br>	<span class="hljs-built_in">return</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
 </li>
-<li><p>分配内存</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs bash">unsigned int memman_alloc(struct MEMMAN *man, unsigned int size)<br>/* 分配 */<br>&#123;<br>	unsigned int i, a;<br>	<span class="hljs-keyword">for</span> (i = 0; i &lt; man-&gt;frees; i++) &#123;<br>		<span class="hljs-keyword">if</span> (man-&gt;free[i].size &gt;= size) &#123;<br>			/* 找到了足够大的内存 */<br>			a = man-&gt;free[i].addr;<br>			man-&gt;free[i].addr += size;<br>			man-&gt;free[i].size -= size;<br>			<span class="hljs-keyword">if</span> (man-&gt;free[i].size == 0) &#123;<br>				/* 如果free[i]变成了0，就减掉一条可用信息 */<br>				man-&gt;frees--;<br>				<span class="hljs-keyword">for</span> (; i &lt; man-&gt;frees; i++) &#123;<br>					man-&gt;free[i] = man-&gt;free[i + 1]; /* 代入结构体 */<br>				&#125;<br>			&#125;<br>			<span class="hljs-built_in">return</span> a;<br>		&#125;<br>	&#125;<br>	<span class="hljs-built_in">return</span> 0; /* 没有可用空间 */<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<p>4.释放内存(在列表中增加一条可用内存)</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><code class="hljs bash">int memman_free(struct MEMMAN *man, unsigned int addr, unsigned int size)<br>/* 释放 */<br>&#123;<br>	int i, j;<br>	/* 为便于归纳内存，将free[]按照addr的顺序排列 */<br>	/* 所以，先决定应该放在哪里 */<br>	<span class="hljs-keyword">for</span> (i = 0; i &lt; man-&gt;frees; i++) &#123;<br>		<span class="hljs-keyword">if</span> (man-&gt;free[i].addr &gt; addr) &#123;<br>			<span class="hljs-built_in">break</span>;<br>		&#125;<br>	&#125;<br>	/* free[i - 1].addr &lt; addr &lt; free[i].addr */<br>	<span class="hljs-keyword">if</span> (i &gt; 0) &#123;<br>		/* 前面有可用内存 */<br>		<span class="hljs-keyword">if</span> (man-&gt;free[i - 1].addr + man-&gt;free[i - 1].size == addr) &#123;<br>			/* 可以与前面的可用内存归纳到一起 */<br>			man-&gt;free[i - 1].size += size;<br>			<span class="hljs-keyword">if</span> (i &lt; man-&gt;frees) &#123;<br>				/* 后面也有 */<br>				<span class="hljs-keyword">if</span> (addr + size == man-&gt;free[i].addr) &#123;<br>					/* 也可以与后面的可用内存归纳到一起 */<br>					man-&gt;free[i - 1].size += man-&gt;free[i].size;<br>					/* man-&gt;free[i]删除 */<br>					/* free[i]变成0后归纳到前面去 */<br>					man-&gt;frees--;<br>					<span class="hljs-keyword">for</span> (; i &lt; man-&gt;frees; i++) &#123;<br>						man-&gt;free[i] = man-&gt;free[i + 1]; /* 结构体赋值 */<br>					&#125;<br>				&#125;<br>			&#125;<br>			<span class="hljs-built_in">return</span> 0; /* 成功完成 */<br>		&#125;<br>	&#125;<br>	/* 不能与前面的可用空间归纳到一起 */<br>	<span class="hljs-keyword">if</span> (i &lt; man-&gt;frees) &#123;<br>		/* 后面还有 */<br>		<span class="hljs-keyword">if</span> (addr + size == man-&gt;free[i].addr) &#123;<br>			/* 可以与后面的内容归纳到一起 */<br>			man-&gt;free[i].addr = addr;<br>			man-&gt;free[i].size += size;<br>			<span class="hljs-built_in">return</span> 0; /* 成功完成 */<br>		&#125;<br>	&#125;<br>	/* 既不能与前面归纳到一起，也不能与后面归纳到一起 */<br>	<span class="hljs-keyword">if</span> (man-&gt;frees &lt; MEMMAN_FREES) &#123;<br>		/* free[i]之后的，向后移动，腾出一点可用空间 */<br>		<span class="hljs-keyword">for</span> (j = man-&gt;frees; j &gt; i; j--) &#123;<br>			man-&gt;free[j] = man-&gt;free[j - 1];<br>		&#125;<br>		man-&gt;frees++;<br>		<span class="hljs-keyword">if</span> (man-&gt;maxfrees &lt; man-&gt;frees) &#123;<br>			man-&gt;maxfrees = man-&gt;frees; /* 更新最大值 */<br>		&#125;<br>		man-&gt;free[i].addr = addr;<br>		man-&gt;free[i].size = size;<br>		<span class="hljs-built_in">return</span> 0; /* 成功完成 */<br>	&#125;<br>	/* 不能往后移动 */<br>	man-&gt;losts++;<br>	man-&gt;lostsize += size;<br>	<span class="hljs-built_in">return</span> -1; /* 失败 */<br>&#125;<br></code></pre></td></tr></table></figure></li>
-</ol>
-</li>
+<li><p>制作map</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><code class="hljs bash">void sheet_refreshmap(struct SHTCTL *ctl, int vx0, int vy0, int vx1, int vy1, int h0)<br>&#123;<br>	int h, bx, by, vx, vy, bx0, by0, bx1, by1;<br>	unsigned char *buf, sid, *map = ctl-&gt;map;<br>	struct SHEET *sht;<br><br>	<span class="hljs-keyword">if</span> (vx0 &lt; 0) &#123; vx0 = 0; &#125;<br>	<span class="hljs-keyword">if</span> (vy0 &lt; 0) &#123; vy0 = 0; &#125;<br>	<span class="hljs-keyword">if</span> (vx1 &gt; ctl-&gt;xsize) &#123; vx1 = ctl-&gt;xsize; &#125;<br>	<span class="hljs-keyword">if</span> (vy1 &gt; ctl-&gt;ysize) &#123; vy1 = ctl-&gt;ysize; &#125;<br><br>	<span class="hljs-keyword">for</span> (h = h0; h &lt;= ctl-&gt;top; h++) &#123;<br>		sht = ctl-&gt;sheets[h];<br>		sid = sht - ctl-&gt;sheets0; /* 将进行了减法计算的地址作为图层号码使用 */<br>		buf = sht-&gt;buf;<br>		bx0 = vx0 - sht-&gt;vx0;<br>		by0 = vy0 - sht-&gt;vy0;<br>		bx1 = vx1 - sht-&gt;vx0;<br>		by1 = vy1 - sht-&gt;vy0;<br>		<span class="hljs-keyword">if</span> (bx0 &lt; 0) &#123; bx0 = 0; &#125;<br>		<span class="hljs-keyword">if</span> (by0 &lt; 0) &#123; by0 = 0; &#125;<br>		<span class="hljs-keyword">if</span> (bx1 &gt; sht-&gt;bxsize) &#123; bx1 = sht-&gt;bxsize; &#125;<br>		<span class="hljs-keyword">if</span> (by1 &gt; sht-&gt;bysize) &#123; by1 = sht-&gt;bysize; &#125;<br><br>		<span class="hljs-keyword">for</span> (by = by0; by &lt; by1; by++) &#123;<br>			vy = sht-&gt;vy0 + by;<br>			<span class="hljs-keyword">for</span> (bx = bx0; bx &lt; bx1; bx++) &#123;<br>				vx = sht-&gt;vx0 + bx;<br>				<span class="hljs-keyword">if</span> (buf[by * sht-&gt;bxsize + bx] != sht-&gt;col_inv) &#123;<br>					map[vy * ctl-&gt;xsize + vx] = sid;<br>				&#125;//除去<br>			&#125;<br>		&#125;<br>	&#125;<br>	<span class="hljs-built_in">return</span>;<br>&#125;<br></code></pre></td></tr></table></figure></li>
 </ol>
 
                 
@@ -320,8 +310,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>09_DAY</div>
-      <div>https://lhhi.github.io/2024/10/13/09-DAY/</div>
+      <div>11_DAY</div>
+      <div>https://lhhi.github.io/2024/10/15/11-DAY/</div>
     </div>
     <div class="license-meta">
       
@@ -333,7 +323,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2024年10月13日</div>
+          <div>2024年10月15日</div>
         </div>
       
       
@@ -365,9 +355,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2024/10/14/10-DAY/" title="10_DAY">
+                      <a href="/2024/10/16/12-DAY/" title="12_DAY">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">10_DAY</span>
+                        <span class="hidden-mobile">12_DAY</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -375,8 +365,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2024/10/12/08-DAY/" title="08_DAY">
-                        <span class="hidden-mobile">08_DAY</span>
+                      <a href="/2024/10/14/10-DAY/" title="10_DAY">
+                        <span class="hidden-mobile">10_DAY</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
